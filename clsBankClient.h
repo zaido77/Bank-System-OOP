@@ -36,6 +36,21 @@ private:
 		);
 	}
 
+	string _ConvertToLine(string Delim = "#//#")
+	{
+		string Line = "";
+
+		Line += GetFirstName() + Delim;
+		Line += GetLastName() + Delim;
+		Line += GetEmail() + Delim;
+		Line += GetPhone() + Delim;
+		Line += _AccountNumber + Delim;
+		Line += _PinCode + Delim;
+		Line += to_string(_AccountBalance);
+
+		return Line;
+	}
+
 	static clsBankClient _GetEmptyClientObject()
 	{
 		return clsBankClient(enMode::EmptyMode, "", "", "", "", "", "", 0);
@@ -151,6 +166,60 @@ public:
 		clsBankClient Client = Find(AccountNumber);
 
 		return !Client.IsEmpty();
+	}
+
+	static vector<clsBankClient> LoadClientsDataFromFile()
+	{
+		vector<clsBankClient> vClients;
+
+		fstream MyFile;
+		MyFile.open(FileName, ios::in);
+
+		if (MyFile.is_open())
+		{
+			string Line = "";
+
+			while (getline(MyFile, Line))
+			{
+				clsBankClient Client = _ConvertLineToClientObject(Line);
+				vClients.push_back(Client);
+			}
+
+			MyFile.close();
+		}
+
+		return vClients;
+	}
+
+	static void SaveClientsDataToFile(vector<clsBankClient>& vClients)
+	{
+		fstream MyFile;
+		MyFile.open(FileName, ios::out);
+
+		if (MyFile.is_open())
+		{
+			for (clsBankClient& Client : vClients)
+			{
+				if (!Client.IsEmpty())
+				{
+					MyFile << Client._ConvertToLine() << "\n";
+				}
+			}
+
+			MyFile.close();
+		}
+	}
+
+	void Update(vector<clsBankClient>& vClients)
+	{
+		for (clsBankClient& Client : vClients)
+		{
+			if (Client.GetAccountNumber() == _AccountNumber)
+			{
+				Client = *this;
+				break;
+			}
+		}
 	}
 };
 
