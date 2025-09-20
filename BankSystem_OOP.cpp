@@ -2,9 +2,6 @@
 
 #include <iostream>
 #include <string>
-#include <ctime>
-#include <iomanip> //setw
-#include <vector>  // vector
 #include <cctype>  // to is upper, lower, digit, punct
 #include <fstream> // Files
 #include "clsBankClient.h"
@@ -20,39 +17,44 @@ void ReadClientInfo(clsBankClient& Client)
     Client.SetPinCode(clsInputValidate::ReadString("Enter Pin Code: "));
 
     cout << "Enter Account Balance: ";
-    Client.SetAccountBalance(clsInputValidate::ReadPositiveDblNumber("Balance is not positive, Enter again: "));
+    Client.SetAccountBalance(clsInputValidate::ReadPositiveFloatNumber("Balance is not positive, Enter again: "));
 }
 
 void UpdateClient()
 {
-    vector<clsBankClient> vClients = clsBankClient::LoadClientsDataFromFile();
+    string AccountNumber = clsInputValidate::ReadString("Please enter Account Number: ");
 
-    string AccountNumber = clsInputValidate::ReadString("Enter Account Number To Update: ");
-    clsBankClient Client = clsBankClient::Find(AccountNumber);
-    
-    while (Client.IsEmpty())
+    while (!clsBankClient::IsClientExist(AccountNumber))
     {
-        AccountNumber = clsInputValidate::ReadString("Account Number is not found, choose another one: ");
-        Client = clsBankClient::Find(AccountNumber);
+        AccountNumber = clsInputValidate::ReadString("Account Number not found, choose anoter one: ");
     }
-    
+
+    clsBankClient Client = clsBankClient::Find(AccountNumber);
     Client.Print();
 
-    cout << "\n\nUpdate Client Info:\n";
-    cout << "\n___________________\n\n";
+    cout << "\nUpdate Client Info:";
+    cout << "\n___________________\n";
     ReadClientInfo(Client);
 
-    Client.Update(vClients);
-    clsBankClient::SaveClientsDataToFile(vClients);
-    cout << "\nAccount Updated Succesfully!\n";
+    clsBankClient::enSaveResult SaveResult;
 
-    Client.Print();
+    SaveResult = Client.Save();
 
+    switch (SaveResult)
+    {
+    case clsBankClient::enSaveResult::svSucceeded:
+        cout << "\nAccount Updated Successfully\n";
+        Client.Print();
+        break;
+    case clsBankClient::enSaveResult::svFailedEmptyObject:
+        cout << "\nError: Account was not saved because it's Empty";
+        break;
+    }
 }
 
 int main()
 {
-    UpdateClient(); 
+    UpdateClient();
 
     return 0;
 }
