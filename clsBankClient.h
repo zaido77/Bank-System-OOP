@@ -11,9 +11,10 @@ using namespace std;
 class clsBankClient : public clsPerson
 {
 private:
-	static const string FileName;
+	static const string _FileName;
+	static short _NumberOfClients;
 
-	enum enMode { EmptyMode = 0, UpdateMode = 1 };
+	enum enMode { EmptyMode = 0, UpdateMode = 1, AddNewMode = 2 };
 	
 	enMode _Mode;
 	string _AccountNumber;
@@ -61,7 +62,7 @@ private:
 		vector<clsBankClient> vClients;
 
 		fstream MyFile;
-		MyFile.open(FileName, ios::in);
+		MyFile.open(_FileName, ios::in);
 
 		if (MyFile.is_open())
 		{
@@ -82,7 +83,7 @@ private:
 	static void _SaveClientsDataToFile(vector<clsBankClient>& vClients)
 	{
 		fstream MyFile;
-		MyFile.open(FileName, ios::out);
+		MyFile.open(_FileName, ios::out);
 
 		if (MyFile.is_open())
 		{
@@ -112,7 +113,38 @@ private:
 		_SaveClientsDataToFile(_vClients);
 	}
 
+	static string _GenerateAccountNumber()
+	{
+		return ("A1" + ((_NumberOfClients < 10) ? ("0" + to_string(_NumberOfClients)) : to_string(_NumberOfClients)));
+	}
+
+	static short _LoadClientsNumber()
+	{
+		vector<clsBankClient> vClients = _LoadClientsDataFromFile();
+		return vClients.size();
+	}
+
+	void _Add()
+	{
+		fstream MyFile;
+		MyFile.open(_FileName, ios::app);
+
+		if (MyFile.is_open())
+		{
+			_Mode = enMode::UpdateMode;
+			MyFile << _ConvertClientObjectToLine(*this) << "\n";
+			MyFile.close();
+		}
+	}
+
 public:
+	clsBankClient() : clsPerson("","","","")
+	{
+		_NumberOfClients++;
+		_Mode = enMode::AddNewMode;
+		_AccountNumber = _GenerateAccountNumber();
+	}
+
 	clsBankClient(enMode Mode, string FirstName, string LastName, string Email, string Phone, string AccountNumber, string PinCode, float AccountBalance)
 		: clsPerson(FirstName, LastName, Email, Phone)
 	{
@@ -170,7 +202,7 @@ public:
 	static clsBankClient Find(string AccountNumber)
 	{
 		fstream MyFile;
-		MyFile.open(FileName, ios::in);
+		MyFile.open(_FileName, ios::in);
 
 		if (MyFile.is_open())
 		{
@@ -195,7 +227,7 @@ public:
 	static clsBankClient Find(string AccountNumber, string PinCode)
 	{
 		fstream MyFile;
-		MyFile.open(FileName, ios::in);
+		MyFile.open(_FileName, ios::in);
 
 		if (MyFile.is_open())
 		{
@@ -224,7 +256,7 @@ public:
 		return !Client.IsEmpty();
 	}
 
-	enum enSaveResult { svFailedEmptyObject = 0, svSucceeded = 1 };
+	enum enSaveResult { svFailedEmptyObject = 0, svUpdateSucceeded = 1, svAddSucceeded = 2 };
 
 	enSaveResult Save()
 	{
@@ -234,10 +266,15 @@ public:
 			return enSaveResult::svFailedEmptyObject;
 		case enMode::UpdateMode:
 			_Update();
-			return enSaveResult::svSucceeded;
+			return enSaveResult::svUpdateSucceeded;
+		case enMode::AddNewMode:
+			_Add();
+			return enSaveResult::svAddSucceeded;
 		}
 	}
 
 };
 
-const string clsBankClient::FileName = "Clients.txt";
+const string clsBankClient::_FileName = "Clients.txt";
+
+short clsBankClient::_NumberOfClients = clsBankClient::_LoadClientsNumber();

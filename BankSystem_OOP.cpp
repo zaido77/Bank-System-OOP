@@ -20,41 +20,36 @@ void ReadClientInfo(clsBankClient& Client)
     Client.SetAccountBalance(clsInputValidate::ReadPositiveFloatNumber("Balance is not positive, Enter again: "));
 }
 
-void UpdateClient()
+void AddNewClient()
 {
-    string AccountNumber = clsInputValidate::ReadString("Please enter Account Number: ");
+    clsBankClient Client;
 
-    while (!clsBankClient::IsClientExist(AccountNumber))
-    {
-        AccountNumber = clsInputValidate::ReadString("Account Number not found, choose anoter one: ");
-    }
-
-    clsBankClient Client = clsBankClient::Find(AccountNumber);
-    Client.Print();
-
-    cout << "\nUpdate Client Info:";
-    cout << "\n___________________\n";
+    cout << "Adding New Client" << endl;
+    cout << "_________________" << endl;
     ReadClientInfo(Client);
 
     clsBankClient::enSaveResult SaveResult;
-
     SaveResult = Client.Save();
 
     switch (SaveResult)
     {
-    case clsBankClient::enSaveResult::svSucceeded:
-        cout << "\nAccount Updated Successfully\n";
-        Client.Print();
-        break;
     case clsBankClient::enSaveResult::svFailedEmptyObject:
-        cout << "\nError: Account was not saved because it's Empty";
+        cout << "Account not saved because it is empty!" << endl;
+        break;
+    case clsBankClient::enSaveResult::svUpdateSucceeded:
+        cout << "Account Updated Succesfully!" << endl;
+        break;
+    case clsBankClient::enSaveResult::svAddSucceeded:
+        cout << "Account Added Succesfully!" << endl;
         break;
     }
+    
 }
 
 int main()
 {
-    UpdateClient();
+    AddNewClient();
+   
 
     return 0;
 }
