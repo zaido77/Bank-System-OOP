@@ -20,43 +20,51 @@ void ReadClientInfo(clsBankClient& Client)
     Client.SetAccountBalance(clsInputValidate::ReadPositiveFloatNumber("Balance is not positive, Enter again: "));
 }
 
-void AddNewClient()
+void DeleteClient()
 {
     string AccountNumber = clsInputValidate::ReadString("Please enter Account Number: ");
 
-    while (clsBankClient::IsClientExist(AccountNumber))
+    while (!clsBankClient::IsClientExist(AccountNumber))
     {
-        string ErrorMessage = "Client with Account Number [" + AccountNumber + "] exist, choose anoter one: ";
+        string ErrorMessage = "Account Number not exist, choose anoter one: ";
         AccountNumber = clsInputValidate::ReadString(ErrorMessage);
     }
 
-    clsBankClient NewClient = clsBankClient::GetAddNewClientObject(AccountNumber);
+    clsBankClient Client = clsBankClient::Find(AccountNumber);
+    Client.Print();
 
-    cout << "Adding new Client:" << endl;
-    cout << "__________________" << endl;
-    ReadClientInfo(NewClient);
+    char Answer = 'Y';
+    cout << "Are you sure you want to delete this client? [y/n]? ";
+    cin >> Answer;
 
-    clsBankClient::enSaveResult SaveResult;
-    SaveResult = NewClient.Save();
-
-    switch (SaveResult)
+    if (toupper(Answer) == 'Y')
     {
-    case clsBankClient::enSaveResult::svSucceeded:
-        cout << "Account Added Successfully!" << endl;
-        NewClient.Print();  
-        break;  
-    case clsBankClient::enSaveResult::svFailedEmptyObject:
-        cout << "Error: Failed to save because account is empty" << endl;
-        break;
-    case clsBankClient::enSaveResult::svFailedAccountNumberExists:
-        cout << "Error: Failed to save because account number exist!" << endl;
-        break;
+        clsBankClient::enSaveResult SaveResult;
+        SaveResult = Client.Delete();
+
+        switch (SaveResult)
+        {
+        case clsBankClient::enSaveResult::svSucceeded:
+            cout << "Account Deleted Successfully!" << endl;
+            Client.Print();
+            break;
+        case clsBankClient::enSaveResult::svFailedEmptyObject:
+            cout << "Error: Failed to save because account is empty" << endl;
+            break;
+        case clsBankClient::enSaveResult::svFailedAccountNumberExists:
+            cout << "Error: Failed to save because account number exist!" << endl;
+            break;
+        }
+    }
+    else
+    {
+        return;
     }
 }
 
 int main()
 {
-    AddNewClient();
+    DeleteClient();
 
     return 0;
 }
