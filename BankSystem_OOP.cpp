@@ -22,34 +22,41 @@ void ReadClientInfo(clsBankClient& Client)
 
 void AddNewClient()
 {
-    clsBankClient Client;
+    string AccountNumber = clsInputValidate::ReadString("Please enter Account Number: ");
 
-    cout << "Adding New Client" << endl;
-    cout << "_________________" << endl;
-    ReadClientInfo(Client);
+    while (clsBankClient::IsClientExist(AccountNumber))
+    {
+        string ErrorMessage = "Client with Account Number [" + AccountNumber + "] exist, choose anoter one: ";
+        AccountNumber = clsInputValidate::ReadString(ErrorMessage);
+    }
+
+    clsBankClient NewClient = clsBankClient::GetAddNewClientObject(AccountNumber);
+
+    cout << "Adding new Client:" << endl;
+    cout << "__________________" << endl;
+    ReadClientInfo(NewClient);
 
     clsBankClient::enSaveResult SaveResult;
-    SaveResult = Client.Save();
+    SaveResult = NewClient.Save();
 
     switch (SaveResult)
     {
+    case clsBankClient::enSaveResult::svSucceeded:
+        cout << "Account Added Successfully!" << endl;
+        NewClient.Print();  
+        break;  
     case clsBankClient::enSaveResult::svFailedEmptyObject:
-        cout << "Account not saved because it is empty!" << endl;
+        cout << "Error: Failed to save because account is empty" << endl;
         break;
-    case clsBankClient::enSaveResult::svUpdateSucceeded:
-        cout << "Account Updated Succesfully!" << endl;
-        break;
-    case clsBankClient::enSaveResult::svAddSucceeded:
-        cout << "Account Added Succesfully!" << endl;
+    case clsBankClient::enSaveResult::svFailedAccountNumberExists:
+        cout << "Error: Failed to save because account number exist!" << endl;
         break;
     }
-    
 }
 
 int main()
 {
     AddNewClient();
-   
 
     return 0;
 }

@@ -11,11 +11,10 @@ using namespace std;
 class clsBankClient : public clsPerson
 {
 private:
-	static const string _FileName;
-	static short _NumberOfClients;
+	static const string FileName;
 
 	enum enMode { EmptyMode = 0, UpdateMode = 1, AddNewMode = 2 };
-	
+
 	enMode _Mode;
 	string _AccountNumber;
 	string _PinCode;
@@ -62,7 +61,7 @@ private:
 		vector<clsBankClient> vClients;
 
 		fstream MyFile;
-		MyFile.open(_FileName, ios::in);
+		MyFile.open(FileName, ios::in);
 
 		if (MyFile.is_open())
 		{
@@ -83,7 +82,7 @@ private:
 	static void _SaveClientsDataToFile(vector<clsBankClient>& vClients)
 	{
 		fstream MyFile;
-		MyFile.open(_FileName, ios::out);
+		MyFile.open(FileName, ios::out);
 
 		if (MyFile.is_open())
 		{
@@ -113,37 +112,25 @@ private:
 		_SaveClientsDataToFile(_vClients);
 	}
 
-	static string _GenerateAccountNumber()
+	void _AddNew()
 	{
-		return ("A1" + ((_NumberOfClients < 10) ? ("0" + to_string(_NumberOfClients)) : to_string(_NumberOfClients)));
+		_AddDataLinetoFile(_ConvertClientObjectToLine(*this));
 	}
 
-	static short _LoadClientsNumber()
-	{
-		vector<clsBankClient> vClients = _LoadClientsDataFromFile();
-		return vClients.size();
-	}
-
-	void _Add()
+	static void _AddDataLinetoFile(string Line)
 	{
 		fstream MyFile;
-		MyFile.open(_FileName, ios::app);
+		MyFile.open(FileName, ios::out | ios::app);
 
 		if (MyFile.is_open())
 		{
-			_Mode = enMode::UpdateMode;
-			MyFile << _ConvertClientObjectToLine(*this) << "\n";
+			MyFile << Line << "\n";
+
 			MyFile.close();
 		}
 	}
 
 public:
-	clsBankClient() : clsPerson("","","","")
-	{
-		_NumberOfClients++;
-		_Mode = enMode::AddNewMode;
-		_AccountNumber = _GenerateAccountNumber();
-	}
 
 	clsBankClient(enMode Mode, string FirstName, string LastName, string Email, string Phone, string AccountNumber, string PinCode, float AccountBalance)
 		: clsPerson(FirstName, LastName, Email, Phone)
@@ -153,7 +140,7 @@ public:
 		_PinCode = PinCode;
 		_AccountBalance = AccountBalance;
 	}
-	
+
 	bool IsEmpty()
 	{
 		return (_Mode == enMode::EmptyMode);
@@ -202,7 +189,7 @@ public:
 	static clsBankClient Find(string AccountNumber)
 	{
 		fstream MyFile;
-		MyFile.open(_FileName, ios::in);
+		MyFile.open(FileName, ios::in);
 
 		if (MyFile.is_open())
 		{
@@ -227,7 +214,7 @@ public:
 	static clsBankClient Find(string AccountNumber, string PinCode)
 	{
 		fstream MyFile;
-		MyFile.open(_FileName, ios::in);
+		MyFile.open(FileName, ios::in);
 
 		if (MyFile.is_open())
 		{
@@ -256,25 +243,42 @@ public:
 		return !Client.IsEmpty();
 	}
 
-	enum enSaveResult { svFailedEmptyObject = 0, svUpdateSucceeded = 1, svAddSucceeded = 2 };
+	enum enSaveResult { svFailedEmptyObject = 0, svSucceeded = 1, svFailedAccountNumberExists = 2 };
 
 	enSaveResult Save()
 	{
 		switch (_Mode)
 		{
 		case enMode::EmptyMode:
+
 			return enSaveResult::svFailedEmptyObject;
+
 		case enMode::UpdateMode:
+
 			_Update();
-			return enSaveResult::svUpdateSucceeded;
+			return enSaveResult::svSucceeded;
+
 		case enMode::AddNewMode:
-			_Add();
-			return enSaveResult::svAddSucceeded;
+
+			if (IsClientExist(_AccountNumber))
+			{
+				return enSaveResult::svFailedAccountNumberExists;
+			}
+			else
+			{
+				_AddNew();
+				_Mode = enMode::UpdateMode;
+				return enSaveResult::svSucceeded;
+			}
+
 		}
+	}
+
+	static clsBankClient GetAddNewClientObject(string AccountNumber)
+	{
+		return clsBankClient(enMode::AddNewMode, "", "", "", "", AccountNumber, "", 0);
 	}
 
 };
 
-const string clsBankClient::_FileName = "Clients.txt";
-
-short clsBankClient::_NumberOfClients = clsBankClient::_LoadClientsNumber();
+const string clsBankClient::FileName = "Clients.txt";
