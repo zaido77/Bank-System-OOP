@@ -33,32 +33,21 @@ void DeleteClient()
     clsBankClient Client = clsBankClient::Find(AccountNumber);
     Client.Print();
 
-    char Answer = 'Y';
     cout << "Are you sure you want to delete this client? [y/n]? ";
+    char Answer = 'Y';
     cin >> Answer;
 
     if (toupper(Answer) == 'Y')
     {
-        clsBankClient::enSaveResult SaveResult;
-        SaveResult = Client.Delete();
-
-        switch (SaveResult)
+        if (Client.Delete())
         {
-        case clsBankClient::enSaveResult::svSucceeded:
-            cout << "Account Deleted Successfully!" << endl;
+            cout << "Account Deleted Succesfully" << endl;
             Client.Print();
-            break;
-        case clsBankClient::enSaveResult::svFailedEmptyObject:
-            cout << "Error: Failed to save because account is empty" << endl;
-            break;
-        case clsBankClient::enSaveResult::svFailedAccountNumberExists:
-            cout << "Error: Failed to save because account number exist!" << endl;
-            break;
         }
-    }
-    else
-    {
-        return;
+        else
+        {
+            cout << "Error: Client was not deleted" << endl;
+        }
     }
 }
 

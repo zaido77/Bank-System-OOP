@@ -13,12 +13,13 @@ class clsBankClient : public clsPerson
 private:
 	static const string FileName;
 
-	enum enMode { EmptyMode = 0, UpdateMode = 1, AddNewMode = 2, DeleteMode = 3 };
+	enum enMode { EmptyMode = 0, UpdateMode = 1, AddNewMode = 2 };
 
 	enMode _Mode;
 	string _AccountNumber;
 	string _PinCode;
 	float _AccountBalance;
+	bool _MarkForDelete = false;
 
 	static clsBankClient _ConvertLineToClientObject(string Line, string Delim = "#//#")
 	{
@@ -88,7 +89,7 @@ private:
 		{
 			for (clsBankClient& Client : vClients)
 			{
-				if (!Client.IsEmpty())
+				if (!Client.GetMarkForDelete())
 				{
 					MyFile << _ConvertClientObjectToLine(Client) << "\n";
 				}
@@ -133,24 +134,6 @@ private:
 		}
 	}
 
-	void _Delete()
-	{
-		vector<clsBankClient> _vClients;
-		_vClients = _LoadClientsDataFromFile();
-
-		for (clsBankClient& C : _vClients)
-		{
-			if (C.GetAccountNumber() == _AccountNumber)
-			{
-				*this = _GetEmptyClientObject();
-				C = *this;
-				break;
-			}
-		}
-
-		_SaveClientsDataToFile(_vClients);
-	}
-
 public:
 
 	clsBankClient(enMode Mode, string FirstName, string LastName, string Email, string Phone, string AccountNumber, string PinCode, float AccountBalance)
@@ -170,6 +153,11 @@ public:
 	string GetAccountNumber()
 	{
 		return _AccountNumber;
+	}
+
+	bool GetMarkForDelete()
+	{
+		return _MarkForDelete;
 	}
 
 	void SetPinCode(string PinCode)
@@ -291,19 +279,6 @@ public:
 				_Mode = enMode::UpdateMode;
 				return enSaveResult::svSucceeded;
 			}
-
-		case enMode::DeleteMode:
-
-			if (!IsClientExist(_AccountNumber))
-			{
-				return enSaveResult::svFailedAccountNumberExists;
-			}
-			else
-			{
-				_Delete();
-				return enSaveResult::svSucceeded;
-			}
-
 		}
 	}
 
@@ -312,10 +287,28 @@ public:
 		return clsBankClient(enMode::AddNewMode, "", "", "", "", AccountNumber, "", 0);
 	}
 
-	enSaveResult Delete()
+	bool Delete()
 	{
-		_Mode = enMode::DeleteMode;
-		return Save();
+		vector<clsBankClient> vClients = _LoadClientsDataFromFile();
+
+		for (clsBankClient& C : vClients)
+		{
+			if (C.GetAccountNumber() == _AccountNumber)
+			{
+				C._MarkForDelete = true;
+				_MarkForDelete = true;
+				break;
+			}
+		}
+
+		if (_MarkForDelete)
+		{
+			_SaveClientsDataToFile(vClients);
+			*this = _GetEmptyClientObject();
+			return true;
+		}
+
+		return false;
 	}
 
 };
