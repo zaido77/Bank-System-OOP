@@ -1,59 +1,64 @@
 #pragma warning(disable : 4996) // ctime()
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <cctype>  // to is upper, lower, digit, punct
 #include <fstream> // Files
 #include "clsBankClient.h"
 #include "C:/Users/User/source/repos/Testing/Testing/clsInputValidate.h"
+#include "C:/Users/User/source/repos/Testing/Testing/clsUtil.h"
 using namespace std;
 
-void ReadClientInfo(clsBankClient& Client)
+void PrintClientRecordLine(clsBankClient Client)
 {
-    Client.SetFirstName(clsInputValidate::ReadString("Enter First Name: "));
-    Client.SetLastName(clsInputValidate::ReadString("Enter Last Name: "));
-    Client.SetEmail(clsInputValidate::ReadString("Enter Email: "));
-    Client.SetPhone(clsInputValidate::ReadString("Enter Phone: "));
-    Client.SetPinCode(clsInputValidate::ReadString("Enter Pin Code: "));
+    cout << left;
+    cout << "| " << setw(15) << Client.GetAccountNumber();
+    cout << "| " << setw(20) << Client.GetFullName();
+    cout << "| " << setw(12) << Client.GetPhone();
+    cout << "| " << setw(20) << Client.GetEmail();
+    cout << "| " << setw(10) << Client.GetPinCode();
+    cout << "| " << setw(12) << Client.GetAccountBalance();
 
-    cout << "Enter Account Balance: ";
-    Client.SetAccountBalance(clsInputValidate::ReadPositiveFloatNumber("Balance is not positive, Enter again: "));
+    cout << "\n";
 }
 
-void DeleteClient()
+void ShowClientsList()
 {
-    string AccountNumber = clsInputValidate::ReadString("Please enter Account Number: ");
+    vector<clsBankClient> vClients = clsBankClient::GetClientsList();
 
-    while (!clsBankClient::IsClientExist(AccountNumber))
+    cout << clsUtil::Tabs(4) << "Client List (" << vClients.size() << ") Clients.\n";
+    cout << "____________________________________________________________________________________________\n\n";
+
+    cout << left;
+    cout << "| " << setw(15) << "Account Number";
+    cout << "| " << setw(20) << "Client Name";
+    cout << "| " << setw(12) << "Phone";
+    cout << "| " << setw(20) << "Email";
+    cout << "| " << setw(10) << "Pin Code";
+    cout << "| " << setw(12) << "Balance";
+
+    cout << "\n____________________________________________________________________________________________\n\n";
+
+    if (vClients.size() == 0)
     {
-        string ErrorMessage = "Account Number not exist, choose anoter one: ";
-        AccountNumber = clsInputValidate::ReadString(ErrorMessage);
+        cout << clsUtil::Tabs(4) << "(No Clients Available in the System)\n";
+    }
+    else
+    {
+        for (clsBankClient& Client : vClients)
+        {
+            PrintClientRecordLine(Client);
+        }
     }
 
-    clsBankClient Client = clsBankClient::Find(AccountNumber);
-    Client.Print();
-
-    cout << "Are you sure you want to delete this client? [y/n]? ";
-    char Answer = 'Y';
-    cin >> Answer;
-
-    if (toupper(Answer) == 'Y')
-    {
-        if (Client.Delete())
-        {
-            cout << "Account Deleted Succesfully" << endl;
-            Client.Print();
-        }
-        else
-        {
-            cout << "Error: Client was not deleted" << endl;
-        }
-    }
+    cout << "____________________________________________________________________________________________\n\n";
+    
 }
 
 int main()
 {
-    DeleteClient();
+    ShowClientsList();
 
     return 0;
 }

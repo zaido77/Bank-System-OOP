@@ -311,6 +311,11 @@ public:
 		return false;
 	}
 
+	static vector<clsBankClient> GetClientsList()
+	{
+		return _LoadClientsDataFromFile();
+	}
+
 };
 
 const string clsBankClient::FileName = "Clients.txt";
