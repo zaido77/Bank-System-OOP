@@ -38,6 +38,34 @@ public:
 		// return clsPeriod::isDateInPeriod(Date, clsPeriod(DateFrom, DateTo));
 	}
 
+	static short ReadShortNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
+	{
+		short Number;
+
+		while (!(cin >> Number))
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+			cout << ErrorMessage;
+		}
+
+		return Number;
+	}
+
+	static short ReadShortNumberBetween(short From, short To, string ErrorMessage = "Number is not within range, Enter again:\n")
+	{
+		short Number = ReadShortNumber();
+
+		while (!IsNumberBetween(Number, From, To))
+		{
+			cout << ErrorMessage;
+			Number = ReadShortNumber();
+		}
+
+		return Number;
+	}
+
 	static int ReadIntNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
 	{
 		int Number;

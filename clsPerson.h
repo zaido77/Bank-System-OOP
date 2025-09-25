@@ -65,16 +65,4 @@ public:
         return _FirstName + " " + _LastName;
     }
 
-    virtual void Print()
-    {
-        cout << "Info:\n";
-        cout << "\n___________________";
-        cout << "\nFirstName: " << _FirstName;
-        cout << "\nLastName : " << _LastName;
-        cout << "\nFull Name: " << GetFullName();
-        cout << "\nEmail    : " << _Email;
-        cout << "\nPhone    : " << _Phone;
-        cout << "\n___________________\n";
-
-    }
 };
