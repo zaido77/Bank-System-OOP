@@ -4,8 +4,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "C:/Users/User/source/repos/Testing/Testing/clsPerson.h"
-#include "C:/Users/User/source/repos/Testing/Testing/clsString.h"
+#include "clsPerson.h"
+#include "clsString.h"
 using namespace std;
 
 class clsBankClient : public clsPerson
@@ -314,6 +314,21 @@ public:
 	static vector<clsBankClient> GetClientsList()
 	{
 		return _LoadClientsDataFromFile();
+	}
+
+	static float GetTotalBalances()
+	{
+		vector<clsBankClient> vClients = GetClientsList();
+
+		float TotalBalances = 0;
+
+		for (clsBankClient& Client : vClients)
+		{
+			TotalBalances += Client.GetAccountBalance();
+		}
+
+		return TotalBalances;
+
 	}
 
 };

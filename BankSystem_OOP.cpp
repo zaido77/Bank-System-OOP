@@ -6,36 +6,29 @@
 #include <cctype>  // to is upper, lower, digit, punct
 #include <fstream> // Files
 #include "clsBankClient.h"
-#include "C:/Users/User/source/repos/Testing/Testing/clsInputValidate.h"
-#include "C:/Users/User/source/repos/Testing/Testing/clsUtil.h"
+#include "clsUtil.h"
 using namespace std;
 
-void PrintClientRecordLine(clsBankClient Client)
+void PrintClientRecordBalanceLine(clsBankClient Client)
 {
     cout << left;
     cout << "| " << setw(15) << Client.GetAccountNumber();
     cout << "| " << setw(20) << Client.GetFullName();
-    cout << "| " << setw(12) << Client.GetPhone();
-    cout << "| " << setw(20) << Client.GetEmail();
-    cout << "| " << setw(10) << Client.GetPinCode();
     cout << "| " << setw(12) << Client.GetAccountBalance();
 
     cout << "\n";
 }
 
-void ShowClientsList()
+void ShowTotalBalancesList()
 {
     vector<clsBankClient> vClients = clsBankClient::GetClientsList();
 
-    cout << clsUtil::Tabs(4) << "Client List (" << vClients.size() << ") Clients.\n";
+    cout << clsUtil::Tabs(4) << "Balances List (" << vClients.size() << ") Clients.\n";
     cout << "____________________________________________________________________________________________\n\n";
 
     cout << left;
     cout << "| " << setw(15) << "Account Number";
     cout << "| " << setw(20) << "Client Name";
-    cout << "| " << setw(12) << "Phone";
-    cout << "| " << setw(20) << "Email";
-    cout << "| " << setw(10) << "Pin Code";
     cout << "| " << setw(12) << "Balance";
 
     cout << "\n____________________________________________________________________________________________\n\n";
@@ -48,17 +41,22 @@ void ShowClientsList()
     {
         for (clsBankClient& Client : vClients)
         {
-            PrintClientRecordLine(Client);
+            PrintClientRecordBalanceLine(Client);
         }
     }
 
     cout << "____________________________________________________________________________________________\n\n";
-    
+ 
+    float TotalBalances = clsBankClient::GetTotalBalances();
+
+    cout << clsUtil::Tabs(4) << "Total Balances = " << TotalBalances << "\n";
+    cout << clsUtil::Tabs(3) << "( " << clsUtil::NumberToText(TotalBalances) << ")\n\n";
+
 }
 
 int main()
 {
-    ShowClientsList();
+    ShowTotalBalancesList();
 
     return 0;
 }
