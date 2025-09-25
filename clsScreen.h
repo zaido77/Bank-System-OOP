@@ -11,14 +11,14 @@ protected:
 
 	static void _DrawScreenHeader(string Title, string SubTitle = "")
 	{
-		cout << clsUtil::Tabs(4) << "______________________________________\n\n";
+		cout << clsUtil::Tabs(5) << "______________________________________\n\n";
 		
-		cout << clsUtil::Tabs(4) << Title << "\n";
+		cout << clsUtil::Tabs(5) << Title << "\n";
 
 		if (SubTitle != "")
-			cout << clsUtil::Tabs(4) << SubTitle << "\n";
+			cout << clsUtil::Tabs(5) << SubTitle << "\n";
 
-		cout << clsUtil::Tabs(4) << "______________________________________\n\n";
+		cout << clsUtil::Tabs(5) << "______________________________________\n\n";
 	}
 
 };
