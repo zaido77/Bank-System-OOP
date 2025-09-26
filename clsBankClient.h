@@ -180,21 +180,6 @@ public:
 		return _AccountBalance;
 	}
 
-	void Print()
-	{
-		cout << "\nClient Card:";
-		cout << "\n______________________________\n";
-		cout << "\nFirstName      : " << GetFirstName();
-		cout << "\nLastName       : " << GetLastName();
-		cout << "\nFull Name      : " << GetFullName();
-		cout << "\nEmail          : " << GetEmail();
-		cout << "\nPhone          : " << GetPhone();
-		cout << "\nAccount Number : " << _AccountNumber;
-		cout << "\nPin Code       : " << _PinCode;
-		cout << "\nAccount Balance: " << _AccountBalance;
-		cout << "\n______________________________\n";
-	}
-
 	static clsBankClient Find(string AccountNumber)
 	{
 		fstream MyFile;
@@ -252,32 +237,32 @@ public:
 		return !Client.IsEmpty();
 	}
 
-	enum enSaveResult { svFailedEmptyObject = 0, svSucceeded = 1, svFailedAccountNumberExists = 2 };
+	enum enSaveResults { svFailedEmptyObject = 0, svSucceeded = 1, svFailedAccountNumberExists = 2 };
 
-	enSaveResult Save()
+	enSaveResults Save()
 	{
 		switch (_Mode)
 		{
 		case enMode::EmptyMode:
 
-			return enSaveResult::svFailedEmptyObject;
+			return enSaveResults::svFailedEmptyObject;
 
 		case enMode::UpdateMode:
 
 			_Update();
-			return enSaveResult::svSucceeded;
+			return enSaveResults::svSucceeded;
 
 		case enMode::AddNewMode:
 
 			if (IsClientExist(_AccountNumber))
 			{
-				return enSaveResult::svFailedAccountNumberExists;
+				return enSaveResults::svFailedAccountNumberExists;
 			}
 			else
 			{
 				_AddNew();
 				_Mode = enMode::UpdateMode;
-				return enSaveResult::svSucceeded;
+				return enSaveResults::svSucceeded;
 			}
 		}
 	}

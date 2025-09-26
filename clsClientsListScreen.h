@@ -9,7 +9,7 @@ using namespace std;
 class clsClientsListScreen : protected clsScreen
 {
 private:
-	static void PrintClientRecordLine(clsBankClient Client)
+	static void _PrintClientRecordLine(clsBankClient Client)
 	{
 		cout << setw(8) << left << "";
 		cout << "| " << setw(15) << Client.GetAccountNumber();
@@ -22,7 +22,7 @@ private:
 	}
 
 public:
-	static void ShowClientsScreen()
+	static void ShowClientsList()
 	{
         vector<clsBankClient> vClients = clsBankClient::GetClientsList();
 
@@ -55,7 +55,7 @@ public:
         {
             for (clsBankClient& Client : vClients)
             {
-                PrintClientRecordLine(Client);
+                _PrintClientRecordLine(Client);
             }
         }
 
