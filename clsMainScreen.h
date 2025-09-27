@@ -8,6 +8,7 @@
 #include "clsDeleteClientScreen.h"
 #include "clsUpdateClientScreen.h"
 #include "clsFindClientScreen.h"
+#include "clsTransactionsScreen.h"
 using namespace std;
 
 class clsMainScreen : protected clsScreen
@@ -25,9 +26,9 @@ private:
         return clsInputValidate::ReadShortNumberBetween(1, 8, "Enter Number between 1 to 8? ");
     }
 
-    static void _GoBackToMainMenue()
+    static void _GoBackToMainMenu()
     {
-        cout << "\n\tPress any key to go back to Main Menu...\n";
+        cout << "\nPress any key to go back to Main Menu..." << endl;
         system("pause>0");
         ShowMainMenu();
     }
@@ -59,8 +60,7 @@ private:
 
     static void _ShowTransactionsMenu()
     {
-        cout << "\nTransactions Menue Will be here...\n";
-
+        clsTransactionsScreen::ShowTransactionsMenu();
     }
 
     static void _ShowManageUsersMenu()
@@ -82,41 +82,43 @@ private:
         case enMainMenuOptions::eListClients:
             system("cls");
             _ShowAllClientsScreen();
-            _GoBackToMainMenue();
+            _GoBackToMainMenu();
             break;
 
         case enMainMenuOptions::eAddNewClient:
             system("cls");
             _ShowAddNewClientsScreen();
-            _GoBackToMainMenue();
+            _GoBackToMainMenu();
             break;
 
         case enMainMenuOptions::eDeleteClient:
             system("cls");
             _ShowDeleteClientScreen();
-            _GoBackToMainMenue();
+            _GoBackToMainMenu();
             break;
 
         case enMainMenuOptions::eUpdateClient:
             system("cls");
             _ShowUpdateClientScreen();
-            _GoBackToMainMenue();
+            _GoBackToMainMenu();
             break;
 
         case enMainMenuOptions::eFindClient:
             system("cls");
             _ShowFindClientScreen();
-            _GoBackToMainMenue();
+            _GoBackToMainMenu();
             break;
 
         case enMainMenuOptions::eShowTransactionsMenue:
             system("cls");
             _ShowTransactionsMenu();
+            _GoBackToMainMenu();
             break;
 
         case enMainMenuOptions::eManageUsers:
             system("cls");
             _ShowManageUsersMenu();
+            _GoBackToMainMenu();
             break;
 
         case enMainMenuOptions::eExit:
@@ -136,16 +138,16 @@ public:
         _DrawScreenHeader("\t     Main Screen");
 
         cout << setw(37) << "" << "===========================================\n";
-        cout << setw(37) << "" << "               Main Menue\n";
+        cout << setw(37) << "" << "                 Main Menue\n";
         cout << setw(37) << "" << "===========================================\n";
-        cout << setw(37) << "" << "        [1] Show Clients List.\n";
-        cout << setw(37) << "" << "        [2] Add New Client.\n";
-        cout << setw(37) << "" << "        [3] Delete Client.\n";
-        cout << setw(37) << "" << "        [4] Update Client Info.\n";
-        cout << setw(37) << "" << "        [5] Find Client.\n";
-        cout << setw(37) << "" << "        [6] Transactions.\n";
-        cout << setw(37) << "" << "        [7] Manage Users.\n";
-        cout << setw(37) << "" << "        [8] Logout.\n";
+        cout << setw(37) << "" << "   [1] Show Clients List.\n";
+        cout << setw(37) << "" << "   [2] Add New Client.\n";
+        cout << setw(37) << "" << "   [3] Delete Client.\n";
+        cout << setw(37) << "" << "   [4] Update Client Info.\n";
+        cout << setw(37) << "" << "   [5] Find Client.\n";
+        cout << setw(37) << "" << "   [6] Transactions.\n";
+        cout << setw(37) << "" << "   [7] Manage Users.\n";
+        cout << setw(37) << "" << "   [8] Logout.\n";
         cout << setw(37) << "" << "===========================================\n";
 
         _PerformMainMenuOption((enMainMenuOptions)_ReadMainMenuOption());
