@@ -112,7 +112,8 @@ private:
         case enMainMenuOptions::eShowTransactionsMenue:
             system("cls");
             _ShowTransactionsMenu();
-            _GoBackToMainMenu();
+            //_GoBackToMainMenu();
+            ShowMainMenu();
             break;
 
         case enMainMenuOptions::eManageUsers:
