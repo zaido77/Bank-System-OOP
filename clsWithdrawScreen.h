@@ -49,6 +49,7 @@ public:
 		float Amount = 0;
 		cout << "\nPlease enter withdraw amount? ";
 		Amount = clsInputValidate::ReadPositiveFloatNumber();
+		//Amount = clsInputValidate::ReadDblNumberBetween(1, Client.GetAccountBalance());
 
 		cout << "\nAre you sure you want to perform this transaction? [y/n]? ";
 		char Answer = 'n';
