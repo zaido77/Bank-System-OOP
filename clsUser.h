@@ -10,7 +10,7 @@ using namespace std;
 
 class clsUser : public clsPerson
 {
-	const static string FileName;
+	static const string FileName;
 
 private:
 	enum enMode { EmptyMode = 1, UpdateMode = 2, AddNewMode = 3 };
@@ -45,7 +45,7 @@ private:
 		Line += User.GetLastName() + Delim;
 		Line += User.GetEmail() + Delim;
 		Line += User.GetPhone() + Delim;
-		Line += User.GetUserName() + Delim;
+		Line += User.GetUsername() + Delim;
 		Line += User.GetPassword() + Delim;
 		Line += to_string(User.GetPermissions());
 
@@ -105,7 +105,7 @@ private:
 
 		for (clsUser& U : vUsers)
 		{
-			if (U.GetUserName() == _UserName)
+			if (U.GetUsername() == _UserName)
 			{
 				U = *this;
 				break;
@@ -149,7 +149,7 @@ public:
 		_Mode == enMode::EmptyMode;
 	}
 
-	string GetUserName()
+	string GetUsername()
 	{
 		return _UserName;
 	}
@@ -192,7 +192,7 @@ public:
 			{
 				clsUser User = _ConvertLineToUserObject(Line);
 
-				if (User.GetUserName() == UserName)
+				if (User.GetUsername() == UserName)
 				{
 					MyFile.close();
 					return User;
@@ -218,7 +218,7 @@ public:
 			{
 				clsUser User = _ConvertLineToUserObject(Line);
 
-				if ((User.GetUserName() == UserName) && (User.GetPassword() == Password))
+				if ((User.GetUsername() == UserName) && (User.GetPassword() == Password))
 				{
 					MyFile.close();
 					return User;
@@ -279,7 +279,7 @@ public:
 
 		for (clsUser& U : vUsers)
 		{
-			if (U.GetUserName() == _UserName)
+			if (U.GetUsername() == _UserName)
 			{
 				U._MarkForDelete = true;
 				_MarkForDelete = true;
@@ -304,4 +304,4 @@ public:
 
 };
 
-const static string FileName = "Users.txt";
+const string clsUser::FileName = "Users.txt";
