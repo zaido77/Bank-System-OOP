@@ -134,7 +134,12 @@ private:
 	}
 
 
-public:
+public:	
+	enum enPermissions {
+		pAll = -1, pListClients = 1, pAddNewClient = 2, pDeleteClient = 4,
+		pUpdateClient = 8, pFindClient = 16, pTransactions = 32, pManageUsers = 64
+	};
+
 	clsUser(enMode Mode, string FirstName, string LastName, string Email, string Phone, string UserName, string Password, short Permissions)
 		: clsPerson(FirstName, LastName, Email, Phone)
 	{
@@ -146,7 +151,7 @@ public:
 
 	bool IsEmpty()
 	{
-		_Mode == enMode::EmptyMode;
+		return _Mode == enMode::EmptyMode;
 	}
 
 	string GetUsername()

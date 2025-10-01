@@ -5,6 +5,7 @@
 #include "clsInputValidate.h"
 #include "clsScreen.h"
 #include "clsUsersListScreen.h"
+#include "clsAddNewUserScreen.h"
 using namespace std;
 
 class clsManageUsersScreen : protected clsScreen
@@ -35,7 +36,7 @@ private:
 
     static void _ShowAddNewUserScreen()
     {
-        cout << "Here will be add new user screen" << endl;
+        clsAddNewUserScreen::ShowAddNewUserScreen();
     }
 
     static void _ShowDeleteUserScreen()
