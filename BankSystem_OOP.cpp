@@ -5,12 +5,12 @@
 #include <string>
 #include <cctype>  // to is upper, lower, digit, punct
 #include <fstream> // Files
-#include "clsMainScreen.h"
+#include "clsLoginScreen.h"
 using namespace std;
 
 int main()
 {
-    clsMainScreen::ShowMainMenu();
+    clsLoginScreen::ShowLoginScreen();
 
 
     return 0;
