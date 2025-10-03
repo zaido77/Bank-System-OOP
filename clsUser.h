@@ -307,6 +307,14 @@ public:
 		return _LoadUsersDataFromFile();
 	}
 
+	bool CheckAccessPermission(enPermissions Permission)
+	{
+		if (Permission == enPermissions::pAll)
+			return true;
+
+		return (Permission & _Permissions) == Permission;
+	}
+
 };
 
 const string clsUser::FileName = "Users.txt";
