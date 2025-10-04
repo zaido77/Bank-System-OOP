@@ -22,7 +22,10 @@ protected:
 			cout << clsUtil::Tabs(5) << SubTitle << "\n";
 
 		cout << clsUtil::Tabs(5) << "______________________________________\n\n";
-		cout << clsUtil::Tabs(5) << "User: " << CurrentUser.GetUsername() << "\n";
+		
+		if (!CurrentUser.IsEmpty())
+			cout << clsUtil::Tabs(5) << "User: " << CurrentUser.GetUsername() << "\n";
+		
 		cout << clsUtil::Tabs(5) << "Date: " << clsDate::DateToString(clsDate()) << "\n\n";
 	}
 
