@@ -5,7 +5,6 @@
 #include "clsUser.h"
 #include "clsInputValidate.h"
 #include "Global.h"
-#include "clsLoginRegister.h"
 #include <iostream>
 using namespace std;
 
@@ -41,7 +40,7 @@ private:
 
 		} while (LoginFailed);
 
-		clsLoginRegister::Log();
+		CurrentUser.RegisterLogin();
 		clsMainScreen::ShowMainMenu();
 		return true;
 	}

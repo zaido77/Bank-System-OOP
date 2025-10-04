@@ -268,9 +268,4 @@ public:
         return Hour + ":" + Minute + ":" + Second;
     }
 
-    static string GetCurrentTimestamp()
-    {
-        return clsDate::DateToString(clsDate()) + " - " + GetSystemTime();
-    }
-
 };

@@ -6,6 +6,7 @@
 #include <vector>
 #include "clsPerson.h"
 #include "clsString.h"
+#include "clsDate.h"
 using namespace std;
 
 class clsUser : public clsPerson
@@ -20,6 +21,18 @@ private:
 	string _Password;
 	short _Permissions;
 	bool _MarkForDelete = false;
+
+	string _PrepareLoginRecord(string Delim = "#//#")
+	{
+		string LoginRecord = "";
+
+		LoginRecord += clsDate::GetSystemDateTimeString() + Delim;
+		LoginRecord += _UserName + Delim;
+		LoginRecord += _Password + Delim;
+		LoginRecord += to_string(_Permissions);
+
+		return LoginRecord;
+	}
 
 	static clsUser _ConvertLineToUserObject(string Line, string Delim = "#//#")
 	{
@@ -313,6 +326,21 @@ public:
 			return true;
 
 		return (Permission & _Permissions) == Permission;
+	}
+
+	void RegisterLogin()
+	{
+		string DataLine = _PrepareLoginRecord();
+
+		fstream MyFile;
+		MyFile.open("LoginRegister.txt", ios::out | ios::app);
+
+		if (MyFile.is_open())
+		{
+			MyFile << DataLine << "\n";
+
+			MyFile.close();
+		}
 	}
 
 };
