@@ -256,4 +256,21 @@ public:
 
     }
 
+    static string GetSystemTime()
+    {
+        time_t t = time(0);
+        tm* now = localtime(&t);
+
+        string Hour = to_string(now->tm_hour);
+        string Minute = to_string(now->tm_min);
+        string Second = to_string(now->tm_sec);
+
+        return Hour + ":" + Minute + ":" + Second;
+    }
+
+    static string GetCurrentTimestamp()
+    {
+        return clsDate::DateToString(clsDate()) + " - " + GetSystemTime();
+    }
+
 };
