@@ -11,7 +11,10 @@ using namespace std;
 
 class clsUser : public clsPerson
 {
-	static const string FileName;
+	struct stLoginRegisterRecord; // Decleration
+
+	static const string UsersFileName;
+	static const string LoginRegisterFileName;
 
 private:
 	enum enMode { EmptyMode = 1, UpdateMode = 2, AddNewMode = 3 };
@@ -21,6 +24,20 @@ private:
 	string _Password;
 	short _Permissions;
 	bool _MarkForDelete = false;
+
+	static stLoginRegisterRecord _ConvertLineToLoginRegisterRecord(string Line, string Delim = "#//#")
+	{
+		vector<string> vLoginRegisterRecord = clsString::Split(Line, Delim);
+
+		stLoginRegisterRecord LoginRegisterRecord;
+
+		LoginRegisterRecord.DateTime = vLoginRegisterRecord[0];
+		LoginRegisterRecord.UserName = vLoginRegisterRecord[1];
+		LoginRegisterRecord.Password = vLoginRegisterRecord[2];
+		LoginRegisterRecord.Permissions = stoi(vLoginRegisterRecord[3]);
+
+		return LoginRegisterRecord;
+	}
 
 	string _PrepareLoginRecord(string Delim = "#//#")
 	{
@@ -75,7 +92,7 @@ private:
 		vector<clsUser> vUsers;
 
 		fstream MyFile;
-		MyFile.open(FileName, ios::in);
+		MyFile.open(UsersFileName, ios::in);
 
 		if (MyFile.is_open())
 		{
@@ -96,7 +113,7 @@ private:
 	static void _SaveUsersDataToFile(vector<clsUser>& vUsers)
 	{
 		fstream MyFile;
-		MyFile.open(FileName, ios::out);
+		MyFile.open(UsersFileName, ios::out);
 
 		if (MyFile.is_open())
 		{
@@ -133,10 +150,10 @@ private:
 		_AddUserDataLineToFile(_ConvertUserObjectToLine(*this));
 	}
 
-	void _AddUserDataLineToFile(string DataLine)
+	static void _AddUserDataLineToFile(string DataLine)
 	{
 		fstream MyFile;
-		MyFile.open(FileName, ios::out | ios::app);
+		MyFile.open(UsersFileName, ios::out | ios::app);
 
 		if (MyFile.is_open())
 		{
@@ -146,11 +163,18 @@ private:
 		}
 	}
 
-
 public:	
 	enum enPermissions {
 		pAll = -1, pListClients = 1, pAddNewClient = 2, pDeleteClient = 4,
 		pUpdateClient = 8, pFindClient = 16, pTransactions = 32, pManageUsers = 64
+	};
+
+	struct stLoginRegisterRecord
+	{
+		string DateTime;
+		string UserName;
+		string Password;
+		short Permissions;
 	};
 
 	clsUser(enMode Mode, string FirstName, string LastName, string Email, string Phone, string UserName, string Password, short Permissions)
@@ -200,7 +224,7 @@ public:
 	static clsUser Find(string UserName)
 	{
 		fstream MyFile;
-		MyFile.open(FileName, ios::in);
+		MyFile.open(UsersFileName, ios::in);
 
 		if (MyFile.is_open())
 		{
@@ -226,7 +250,7 @@ public:
 	static clsUser Find(string UserName, string Password)
 	{
 		fstream MyFile;
-		MyFile.open(FileName, ios::in);
+		MyFile.open(UsersFileName, ios::in);
 
 		if (MyFile.is_open())
 		{
@@ -333,7 +357,7 @@ public:
 		string DataLine = _PrepareLoginRecord();
 
 		fstream MyFile;
-		MyFile.open("LoginRegister.txt", ios::out | ios::app);
+		MyFile.open(LoginRegisterFileName, ios::out | ios::app);
 
 		if (MyFile.is_open())
 		{
@@ -343,6 +367,31 @@ public:
 		}
 	}
 
+	static vector<stLoginRegisterRecord> GetLoginRegisterList()
+	{
+		vector<stLoginRegisterRecord> vLoginRegisterRecords;
+
+		fstream MyFile;
+		MyFile.open(LoginRegisterFileName, ios::in);
+
+		if (MyFile.is_open())
+		{
+			string Line = "";
+			stLoginRegisterRecord LoginRegisterRecord;
+
+			while (getline(MyFile, Line))
+			{
+				LoginRegisterRecord = _ConvertLineToLoginRegisterRecord(Line);
+				vLoginRegisterRecords.push_back(LoginRegisterRecord);
+			}
+
+			MyFile.close();
+		}
+
+		return vLoginRegisterRecords;
+	}
+
 };
 
-const string clsUser::FileName = "Users.txt";
+const string clsUser::UsersFileName = "Users.txt";
+const string clsUser::LoginRegisterFileName = "LoginRegister.txt";

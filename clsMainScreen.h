@@ -10,6 +10,7 @@
 #include "clsFindClientScreen.h"
 #include "clsTransactionsScreen.h"
 #include "clsManageUsersScreen.h"
+#include "clsLoginRegisterScreen.h"
 #include "Global.h"
 using namespace std;
 
@@ -19,13 +20,13 @@ private:
     enum enMainMenuOptions {
         eListClients = 1, eAddNewClient = 2, eDeleteClient = 3,
         eUpdateClient = 4, eFindClient = 5, eShowTransactionsMenue = 6,
-        eManageUsers = 7, eExit = 8
+        eManageUsers = 7, eLoginRegister = 8, eExit = 9
     };
 
     static short _ReadMainMenuOption()
     {
-        cout << setw(37) << "" << "Choose what do you want to do [1 to 8]? ";
-        return clsInputValidate::ReadShortNumberBetween(1, 8, "Enter Number between 1 to 8? ");
+        cout << setw(37) << "" << "Choose what do you want to do [1 to 9]? ";
+        return clsInputValidate::ReadShortNumberBetween(1, 9, "Enter Number between 1 to 9? ");
     }
 
     static void _GoBackToMainMenu()
@@ -68,6 +69,11 @@ private:
     static void _ShowManageUsersMenu()
     {
         clsManageUsersScreen::ShowManageUsersMenu();
+    }
+
+    static void _ShowLoginRegisterScreen()
+    {
+        clsLoginRegisterScreen::ShowLoginRegisterScreen();
     }
 
     static void _Logout()
@@ -121,6 +127,12 @@ private:
             _GoBackToMainMenu();
             break;
 
+        case enMainMenuOptions::eLoginRegister:
+            system("cls");
+            _ShowLoginRegisterScreen();
+            _GoBackToMainMenu();
+            break;
+
         case enMainMenuOptions::eExit:
             system("cls");
             _Logout();
@@ -146,7 +158,8 @@ public:
         cout << setw(37) << "" << "   [5] Find Client.\n";
         cout << setw(37) << "" << "   [6] Transactions.\n";
         cout << setw(37) << "" << "   [7] Manage Users.\n";
-        cout << setw(37) << "" << "   [8] Logout.\n";
+        cout << setw(37) << "" << "   [8] Login Register.\n";
+        cout << setw(37) << "" << "   [9] Logout.\n";
         cout << setw(37) << "" << "===========================================\n";
 
         _PerformMainMenuOption((enMainMenuOptions)_ReadMainMenuOption());
