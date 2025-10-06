@@ -21,7 +21,7 @@ private:
 			if (LoginFailed)
 			{
 				FailedLoginCount++;
-				cout << "\nInvalid UserName/Password\n";
+				cout << "\nInvalid Username/Password\n";
 				cout << "You have " << (3 - FailedLoginCount) << " Trial(s) to login.\n\n";
 			}
 
@@ -31,7 +31,7 @@ private:
 				return false;
 			}
 
-			string UserName = clsInputValidate::ReadString("Enter UserName: ");
+			string UserName = clsInputValidate::ReadString("Enter Username: ");
 			string Password = clsInputValidate::ReadString("Enter Password: ");
 
 			CurrentUser = clsUser::Find(UserName, Password);

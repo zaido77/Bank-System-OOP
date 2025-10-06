@@ -336,6 +336,18 @@ public:
 
 	}
 
+	bool Transfer(float Amount, clsBankClient& DestinationClient)
+	{
+		if (Amount > _AccountBalance)
+		{
+			return false;
+		}
+
+		this->Withdraw(Amount);
+		DestinationClient.Deposit(Amount);
+		return true;
+	}
+
 };
 
 const string clsBankClient::FileName = "Clients.txt";
