@@ -6,12 +6,14 @@
 #include <vector>
 #include "clsPerson.h"
 #include "clsString.h"
+#include "clsDate.h"
 using namespace std;
 
 class clsBankClient : public clsPerson
 {
 private:
-	static const string FileName;
+	static const string ClientsFileName;
+	static const string TransferLogFileName;
 
 	enum enMode { EmptyMode = 0, UpdateMode = 1, AddNewMode = 2 };
 
@@ -20,6 +22,37 @@ private:
 	string _PinCode;
 	float _AccountBalance;
 	bool _MarkForDelete = false;
+
+	string _PrepareTransferLogRecord(float Amount, clsBankClient DestinationClient, string UserName, string Delim = "#//#")
+	{
+		string TransferRecord = "";
+
+		TransferRecord += clsDate::GetSystemDateTimeString() + Delim;
+		TransferRecord += _AccountNumber + Delim;
+		TransferRecord += DestinationClient.GetAccountNumber() + Delim;
+		TransferRecord += to_string(Amount) + Delim;
+		TransferRecord += to_string(_AccountBalance) + Delim;
+		TransferRecord += to_string(DestinationClient.GetAccountBalance()) + Delim;
+		TransferRecord += UserName;
+
+		return TransferRecord;
+	}
+
+	void _RegisterTransferLog(float Amount, clsBankClient DestinationClient, string UserName)
+	{
+		string DataLine = _PrepareTransferLogRecord(Amount, DestinationClient, UserName);
+
+		fstream MyFile;
+		MyFile.open(TransferLogFileName, ios::out | ios::app);
+
+		if (MyFile.is_open())
+		{
+			MyFile << DataLine << "\n";
+
+
+			MyFile.close();
+		}
+	}
 
 	static clsBankClient _ConvertLineToClientObject(string Line, string Delim = "#//#")
 	{
@@ -62,7 +95,7 @@ private:
 		vector<clsBankClient> vClients;
 
 		fstream MyFile;
-		MyFile.open(FileName, ios::in);
+		MyFile.open(ClientsFileName, ios::in);
 
 		if (MyFile.is_open())
 		{
@@ -83,7 +116,7 @@ private:
 	static void _SaveClientsDataToFile(vector<clsBankClient>& vClients)
 	{
 		fstream MyFile;
-		MyFile.open(FileName, ios::out);
+		MyFile.open(ClientsFileName, ios::out);
 
 		if (MyFile.is_open())
 		{
@@ -124,7 +157,7 @@ private:
 	static void _AddDataLinetoFile(string DataLine)
 	{
 		fstream MyFile;
-		MyFile.open(FileName, ios::out | ios::app);
+		MyFile.open(ClientsFileName, ios::out | ios::app);
 
 		if (MyFile.is_open())
 		{
@@ -203,7 +236,7 @@ public:
 	static clsBankClient Find(string AccountNumber)
 	{
 		fstream MyFile;
-		MyFile.open(FileName, ios::in);
+		MyFile.open(ClientsFileName, ios::in);
 
 		if (MyFile.is_open())
 		{
@@ -228,7 +261,7 @@ public:
 	static clsBankClient Find(string AccountNumber, string PinCode)
 	{
 		fstream MyFile;
-		MyFile.open(FileName, ios::in);
+		MyFile.open(ClientsFileName, ios::in);
 
 		if (MyFile.is_open())
 		{
@@ -336,18 +369,21 @@ public:
 
 	}
 
-	bool Transfer(float Amount, clsBankClient& DestinationClient)
+	bool Transfer(float Amount, clsBankClient& DestinationClient, string UserName)
 	{
 		if (Amount > _AccountBalance)
 		{
 			return false;
 		}
 
-		this->Withdraw(Amount);
+		Withdraw(Amount);
 		DestinationClient.Deposit(Amount);
+		_RegisterTransferLog(Amount, DestinationClient, UserName);
+
 		return true;
 	}
 
 };
 
-const string clsBankClient::FileName = "Clients.txt";
+const string clsBankClient::ClientsFileName = "Clients.txt";
+const string clsBankClient::TransferLogFileName = "TransferLog.txt";
