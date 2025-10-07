@@ -11,6 +11,8 @@ using namespace std;
 
 class clsBankClient : public clsPerson
 {
+	struct stTranferLogRecord;
+
 private:
 	static const string ClientsFileName;
 	static const string TransferLogFileName;
@@ -22,6 +24,23 @@ private:
 	string _PinCode;
 	float _AccountBalance;
 	bool _MarkForDelete = false;
+
+	static stTranferLogRecord _ConvertLineToTransferLogRecord(string Line, string Delim = "#//#")
+	{
+		vector<string> vTranferLogRecord = clsString::Split(Line, Delim);
+
+		stTranferLogRecord TranferLogRecord;
+
+		TranferLogRecord.DateTime = vTranferLogRecord[0];
+		TranferLogRecord.SourceAccNumber = vTranferLogRecord[1];
+		TranferLogRecord.DestinationAccNumber = vTranferLogRecord[2];
+		TranferLogRecord.Amount = stof(vTranferLogRecord[3]);
+		TranferLogRecord.SourceAccBalance = stof(vTranferLogRecord[4]);
+		TranferLogRecord.DestinationAccBalance = stof(vTranferLogRecord[5]);
+		TranferLogRecord.UserName = vTranferLogRecord[6];
+
+		return TranferLogRecord;
+	}
 
 	string _PrepareTransferLogRecord(float Amount, clsBankClient DestinationClient, string UserName, string Delim = "#//#")
 	{
@@ -168,6 +187,16 @@ private:
 	}
 
 public:
+	struct stTranferLogRecord
+	{
+		string DateTime;
+		string SourceAccNumber;
+		string DestinationAccNumber;
+		float Amount;
+		float SourceAccBalance;
+		float DestinationAccBalance;
+		string UserName;
+	};
 
 	clsBankClient(enMode Mode, string FirstName, string LastName, string Email, string Phone, string AccountNumber, string PinCode, float AccountBalance)
 		: clsPerson(FirstName, LastName, Email, Phone)
@@ -381,6 +410,30 @@ public:
 		_RegisterTransferLog(Amount, DestinationClient, UserName);
 
 		return true;
+	}
+
+	static vector<stTranferLogRecord> GetTranferLogList()
+	{
+		vector<stTranferLogRecord> vTranferLogRecords;
+
+		fstream MyFile;
+		MyFile.open(TransferLogFileName, ios::in);
+
+		if (MyFile.is_open())
+		{
+			string Line = "";
+			stTranferLogRecord TranferLogRecord;
+
+			while (getline(MyFile, Line))
+			{
+				TranferLogRecord = _ConvertLineToTransferLogRecord(Line);
+				vTranferLogRecords.push_back(TranferLogRecord);
+			}
+
+			MyFile.close();
+		}
+
+		return vTranferLogRecords;
 	}
 
 };
