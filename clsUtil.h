@@ -165,7 +165,7 @@ public:
         return t;
     }
 
-    static string EncryptText(string Text, short EncryptionKey)
+    static string EncryptText(string Text, short EncryptionKey = 2)
     {
         for (short i = 0; i <= Text.length() - 1; i++)
         {
@@ -175,7 +175,7 @@ public:
         return Text;
     }
 
-    static string DecryptText(string Text, short EncryptionKey)
+    static string DecryptText(string Text, short EncryptionKey = 2)
     {
         for (short i = 0; i <= Text.length() - 1; i++)
         {

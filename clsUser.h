@@ -7,11 +7,12 @@
 #include "clsPerson.h"
 #include "clsString.h"
 #include "clsDate.h"
+#include "clsUtil.h"
 using namespace std;
 
 class clsUser : public clsPerson
 {
-	struct stLoginRegisterRecord; // Decleration
+	struct stLoginRegisterRecord; // Declaration
 
 	static const string UsersFileName;
 	static const string LoginRegisterFileName;
@@ -33,7 +34,7 @@ private:
 
 		LoginRegisterRecord.DateTime = vLoginRegisterRecord[0];
 		LoginRegisterRecord.UserName = vLoginRegisterRecord[1];
-		LoginRegisterRecord.Password = vLoginRegisterRecord[2];
+		LoginRegisterRecord.Password = clsUtil::DecryptText(vLoginRegisterRecord[2]);
 		LoginRegisterRecord.Permissions = stoi(vLoginRegisterRecord[3]);
 
 		return LoginRegisterRecord;
@@ -45,7 +46,7 @@ private:
 
 		LoginRecord += clsDate::GetSystemDateTimeString() + Delim;
 		LoginRecord += _UserName + Delim;
-		LoginRecord += _Password + Delim;
+		LoginRecord += clsUtil::EncryptText(_Password) +Delim;
 		LoginRecord += to_string(_Permissions);
 
 		return LoginRecord;
@@ -62,7 +63,7 @@ private:
 			vUser[2],
 			vUser[3],
 			vUser[4],
-			vUser[5],
+			clsUtil::DecryptText(vUser[5]),
 			stoi(vUser[6])
 		);
 	}
@@ -76,7 +77,7 @@ private:
 		Line += User.GetEmail() + Delim;
 		Line += User.GetPhone() + Delim;
 		Line += User.GetUsername() + Delim;
-		Line += User.GetPassword() + Delim;
+		Line += clsUtil::EncryptText(User.GetPassword()) + Delim;
 		Line += to_string(User.GetPermissions());
 
 		return Line;
