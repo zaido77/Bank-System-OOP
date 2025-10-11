@@ -77,6 +77,11 @@ private:
         if (toupper(Answer) == 'Y')
             Permissions += clsUser::enPermissions::pLoginRegister;
 
+        cout << "\nCurrency Exchange? [y/n]? ";
+        cin >> Answer;
+        if (toupper(Answer) == 'Y')
+            Permissions += clsUser::enPermissions::pCurrencyExchange;
+
         return Permissions;
     }
 
