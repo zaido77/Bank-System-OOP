@@ -3,7 +3,7 @@
 #include <iostream>
 #include "clsInputValidate.h"
 #include "clsScreen.h"
-#include "clsCurrency.h"
+#include "clsCurrenciesListScreen.h"
 using namespace std;
 
 class clsCurrencyExchangeScreen : protected clsScreen
@@ -28,9 +28,9 @@ private:
 		ShowCurrencyExchangeMenu();
 	}
 
-	static void _ShowListCurrenciesScreen()
+	static void _ShowCurrenciesListScreen()
 	{
-		cout << "ShowListCurrenciesScreen" << endl;
+		clsCurrenciesListScreen::ShowCurrenciesListScreen();
 	}
 
 	static void _ShowFindCurrencyScreen()
@@ -54,7 +54,7 @@ private:
 		{
 		case enCurrencyExchangeMenuOptions::eListCurrencies:
 			system("cls");
-			_ShowListCurrenciesScreen();
+			_ShowCurrenciesListScreen();
 			_GoBackToCurrencyExchangeMenu();
 			break;
 
