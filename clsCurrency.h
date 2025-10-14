@@ -148,7 +148,7 @@ public:
 
 	static clsCurrency FindByCountry(string Country)
 	{
-		Country = clsString::UpperFirstLetterOfEachWord(Country);
+		Country = clsString::UpperAllString(Country);
 
 		fstream MyFile;
 		MyFile.open(FileName, ios::in);
