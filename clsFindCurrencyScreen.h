@@ -46,13 +46,13 @@ public:
 
 		if (Answer == enFindCurrencyChoice::eByCode)
 		{
-			string Code = clsInputValidate::ReadString("Enter Currency Code: ");
+			string Code = clsInputValidate::ReadString("\nEnter Currency Code: ");
 			clsCurrency Currency = clsCurrency::FindByCode(Code);
 			_ShowResults(Currency);
 		}
 		else if (Answer == enFindCurrencyChoice::eByCountry)
 		{
-			string Country = clsInputValidate::ReadString("Enter Country Name: ");
+			string Country = clsInputValidate::ReadString("\nEnter Country Name: ");
 			clsCurrency Currency = clsCurrency::FindByCountry(Country);
 			_ShowResults(Currency);
 		}
