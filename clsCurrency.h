@@ -214,6 +214,23 @@ public:
 		return _LoadCurrenciesDataFromFile();
 	}
 
+	float ConvertToUSD(float Amount)
+	{
+		return (Amount / _Rate);
+	}
+
+	float ConvertToOtherCurrency(float Amount, clsCurrency Currency2)
+	{
+		float AmountInUSD = ConvertToUSD(Amount);
+
+		if (Currency2.GetCode() == "USD")
+		{
+			return AmountInUSD;
+		}
+		
+		return AmountInUSD * Currency2.GetRate();
+	}
+
 };
 
 const string clsCurrency::FileName = "Currencies.txt";

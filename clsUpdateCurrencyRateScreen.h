@@ -30,7 +30,7 @@ private:
 public:
 	static void ShowUpdateCurrencyRateScreen()
 	{
-		_DrawScreenHeader("   Update Currency Rate Screen");
+		_DrawScreenHeader("\tUpdate Currency Rate Screen");
 
 		string Code = clsInputValidate::ReadString("\nEnter Currency Code: ");
 
