@@ -9,7 +9,7 @@ using namespace std;
 class clsFindCurrencyScreen : protected clsScreen
 {
 private:
-	enum enFindChoice { ByCode = 1, ByCountry = 2 };
+	enum enFindCurrencyChoice { eByCode = 1, eByCountry = 2 };
 
 	static void _PrintCurrencyCard(clsCurrency Currency)
 	{
@@ -22,21 +22,17 @@ private:
 		cout << "\n_______________________________\n";
 	}
 
-	static clsCurrency _Find(string UserInput, enFindChoice FindChoice)
+	static void _ShowResults(clsCurrency Currency)
 	{
-		switch (FindChoice)
+		if (!Currency.IsEmpty())
 		{
-		case enFindChoice::ByCode:
-			return clsCurrency::FindByCode(UserInput);
-
-		case enFindChoice::ByCountry:
-			return clsCurrency::FindByCountry(UserInput);
+			cout << "\nCurrency Found :)\n";
+			_PrintCurrencyCard(Currency);
 		}
-	}
-
-	static string _GetFindChoiceString(enFindChoice FindChoice)
-	{
-		return (FindChoice == enFindChoice::ByCode) ? "Code" : "Country";
+		else
+		{
+			cout << "\nCurrency Not Found :(\n";
+		}
 	}
 
 public:
@@ -44,22 +40,21 @@ public:
 	{
 		_DrawScreenHeader("\tFind Currency Screen");
 
+		enFindCurrencyChoice Answer;
 		cout << "\nFind By: [1] Code or [2] Country ? ";
-		enFindChoice UserFindChoice = (enFindChoice)clsInputValidate::ReadShortNumberBetween(1, 2);
+		Answer = (enFindCurrencyChoice)clsInputValidate::ReadShortNumberBetween(1, 2);
 
-		string FindChoiceStr = _GetFindChoiceString(UserFindChoice);
-		string UserInput = clsInputValidate::ReadString("\nPlease Enter Currency " + FindChoiceStr + ": ");
-
-		clsCurrency Currency = _Find(UserInput, UserFindChoice);
-		
-		if (Currency.IsEmpty())
+		if (Answer == enFindCurrencyChoice::eByCode)
 		{
-			cout << "\nCurrency Not Found :(\n";
+			string Code = clsInputValidate::ReadString("Enter Currency Code: ");
+			clsCurrency Currency = clsCurrency::FindByCode(Code);
+			_ShowResults(Currency);
 		}
-		else
+		else if (Answer == enFindCurrencyChoice::eByCountry)
 		{
-			cout << "\nCurrency Found :)\n";
-			_PrintCurrencyCard(Currency);
+			string Country = clsInputValidate::ReadString("Enter Country Name: ");
+			clsCurrency Currency = clsCurrency::FindByCountry(Country);
+			_ShowResults(Currency);
 		}
 
 	}
