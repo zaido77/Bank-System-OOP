@@ -48,7 +48,7 @@ public:
 
 		float Amount = 0;
 		cout << "\nPlease enter deposit amount? ";
-		Amount = clsInputValidate::ReadPositiveFloatNumber();
+		Amount = clsInputValidate::ReadPositiveNumber<float>();
 
 		cout << "\nAre you sure you want to perform this transaction? [y/n]? ";
 		char Answer = 'n';

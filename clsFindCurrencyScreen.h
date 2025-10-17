@@ -42,7 +42,7 @@ public:
 
 		enFindCurrencyChoice Answer;
 		cout << "\nFind By: [1] Code or [2] Country ? ";
-		Answer = (enFindCurrencyChoice)clsInputValidate::ReadShortNumberBetween(1, 2);
+		Answer = (enFindCurrencyChoice)clsInputValidate::ReadNumberBetween<short>(1, 2);
 
 		if (Answer == enFindCurrencyChoice::eByCode)
 		{

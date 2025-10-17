@@ -33,7 +33,7 @@ private:
 		Client.SetPinCode(clsInputValidate::ReadString("Enter Pin Code: "));
 
 		cout << "Enter Account Balance: ";
-		Client.SetAccountBalance(clsInputValidate::ReadPositiveFloatNumber("Balance is not positive, Enter again: "));
+		Client.SetAccountBalance(clsInputValidate::ReadPositiveNumber<float>("Balance is not positive, Enter again: "));
 	}
 
 public:

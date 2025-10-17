@@ -23,7 +23,7 @@ private:
 	static float _ReadAmount()
 	{
 		cout << "\nEnter Amount To Exchange: ";
-		float Amount = clsInputValidate::ReadPositiveFloatNumber();
+		float Amount = clsInputValidate::ReadPositiveNumber<float>();
 		return Amount;
 	}
 

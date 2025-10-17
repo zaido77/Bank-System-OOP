@@ -23,7 +23,7 @@ private:
 	static float _ReadRate()
 	{
 		cout << "\nEnter New Rate: ";
-		float NewRate = clsInputValidate::ReadPositiveFloatNumber();
+		float NewRate = clsInputValidate::ReadPositiveNumber<float>();
 		return NewRate;
 	}
 

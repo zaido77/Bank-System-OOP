@@ -7,24 +7,64 @@ using namespace std;
 class clsInputValidate
 {
 public:
-	static bool IsNumberBetween(short Number, short From, short To)
+
+	template <typename T>
+	static bool IsNumberBetween(T Number, T From, T To)
 	{
 		return (Number >= From) && (Number <= To);
 	}
 
-	static bool IsNumberBetween(int Number, int From, int To)
+	template <typename T>
+	static T ReadNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
 	{
-		return (Number >= From) && (Number <= To);
+		T Number;
+
+		while (!(cin >> Number))
+		{
+			cin.clear();
+			cin.ignore(/*numeric_limits<streamsize>::max(), '\n'*/);
+
+			cout << ErrorMessage;
+		}
+
+		return Number;
 	}
 
-	static bool IsNumberBetween(float Number, float From, float To)
+	template <typename T>
+	static short ReadNumberBetween(T From, T To, string ErrorMessage = "Number is not within range, Enter again:\n")
 	{
-		return (Number >= From) && (Number <= To);
+		T Number = ReadNumber<T>();
+
+		while (!IsNumberBetween<T>(Number, From, To))
+		{
+			cout << ErrorMessage;
+			Number = ReadNumber<T>();
+		}
+
+		return Number;
 	}
 
-	static bool IsNumberBetween(double Number, double From, double To)
+	template <typename T>
+	static T ReadPositiveNumber(string ErrorMessage = "Number is not positive, Enter again:\n")
 	{
-		return (Number >= From) && (Number <= To);
+		T Number = ReadNumber<T>();
+
+		while (Number <= 0)
+		{
+			cout << ErrorMessage;
+			Number = ReadNumber<T>();
+		}
+
+		return Number;
+	}
+
+	static string ReadString(string Message = "Enter a String?\n")
+	{
+		string Str = "";
+		cout << Message;
+		getline(cin >> ws, Str);
+
+		return Str;
 	}
 
 	static bool IsDateBetween(clsDate Date, clsDate DateFrom, clsDate DateTo)
@@ -37,157 +77,10 @@ public:
 
 		// return clsPeriod::isDateInPeriod(Date, clsPeriod(DateFrom, DateTo));
 	}
-
-	static short ReadShortNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
-	{
-		short Number;
-
-		while (!(cin >> Number))
-		{
-			cin.clear();
-			cin.ignore(/*numeric_limits<streamsize>::max(), '\n'*/);
-
-			cout << ErrorMessage;
-		}
-
-		return Number;
-	}
-
-	static short ReadShortNumberBetween(short From, short To, string ErrorMessage = "Number is not within range, Enter again:\n")
-	{
-		short Number = ReadShortNumber();
-
-		while (!IsNumberBetween(Number, From, To))
-		{
-			cout << ErrorMessage;
-			Number = ReadShortNumber();
-		}
-
-		return Number;
-	}
-
-	static int ReadIntNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
-	{
-		int Number;
-
-		while (!(cin >> Number))
-		{
-			cin.clear();
-			cin.ignore(/*numeric_limits<streamsize>::max(), '\n'*/);
-
-			cout << ErrorMessage;
-		}
-
-		return Number;
-	}
-
-	static int ReadIntNumberBetween(int From, int To, string ErrorMessage = "Number is not within range, Enter again:\n")
-	{
-		int Number = ReadIntNumber();
-
-		while (!IsNumberBetween(Number, From, To))
-		{
-			cout << ErrorMessage;
-			Number = ReadIntNumber();
-		}
-
-		return Number;
-	}
-
-	static double ReadDblNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
-	{
-		double Number;
-
-		while (!(cin >> Number))
-		{
-			cin.clear();
-			cin.ignore(/*numeric_limits<streamsize>::max(), '\n'*/);
-
-			cout << ErrorMessage;
-		}
-
-		return Number;
-	}
-
-	static double ReadDblNumberBetween(double From, double To, string ErrorMessage = "Number is not within range, Enter again:\n")
-	{
-		double Number = ReadDblNumber();
-
-		while (!IsNumberBetween(Number, From, To))
-		{
-			cout << ErrorMessage;
-			Number = ReadDblNumber();
-		}
-
-		return Number;
-	}
-
+	
 	static bool IsValidDate(clsDate Date)
 	{
 		return Date.IsValid();
-	}
-
-	static string ReadString(string Message = "Enter a String?\n")
-	{
-		string Str = "";
-		cout << Message;
-		getline(cin >> ws, Str);
-
-		return Str;
-	}
-
-	static int ReadPositiveIntNumber(string ErrorMessage = "Number is not positive, Enter again:\n")
-	{
-		int Number = ReadIntNumber();
-
-		while (Number <= 0)
-		{
-			cout << ErrorMessage;
-			Number = ReadIntNumber();
-		}
-
-		return Number;
-	}
-
-	static float ReadFloatNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
-	{
-		float Number;
-
-		while (!(cin >> Number))
-		{
-			cin.clear();
-			cin.ignore(/*numeric_limits<streamsize>::max(), '\n'*/);
-
-			cout << ErrorMessage;
-		}
-
-		return Number;
-	}
-
-	static float ReadPositiveFloatNumber(string ErrorMessage = "Number is not positive, Enter again:\n")
-	{
-		float Number = ReadFloatNumber();
-
-		while (Number <= 0)
-		{
-			cout << ErrorMessage;
-			Number = ReadFloatNumber();
-		}
-
-		return Number;
-	}
-
-	static double ReadPositiveDblNumber(string ErrorMessage = "Number is not positive, Enter again:\n")
-	{
-		double Number = ReadDblNumber();
-
-		while (Number <= 0)
-		{
-			cout << ErrorMessage;
-			Number = ReadDblNumber();
-		}
-
-		return Number;
 	}
 
 };

@@ -29,7 +29,7 @@ private:
     static short _ReadManageUsersMenuOption()
     {
         cout << setw(37) << "" << "Choose what do you want to do [1 to 6]? ";
-        return clsInputValidate::ReadShortNumberBetween(1, 6, "Enter Number between 1 to 6? ");
+        return clsInputValidate::ReadNumberBetween<short>(1, 6, "Enter Number between 1 to 6? ");
     }
 
     static void _ShowListUsersScreen()
