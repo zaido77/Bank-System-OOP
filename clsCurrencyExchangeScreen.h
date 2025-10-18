@@ -45,7 +45,7 @@ private:
 	{
 		clsUpdateCurrencyRateScreen::ShowUpdateCurrencyRateScreen();
 	}
-	
+
 	static void _ShowCurrencyCalculatorScreen()
 	{
 		clsCurrencyCalculatorScreen::ShowCurrencyCalculatorScreen();
@@ -89,11 +89,6 @@ public:
 
 	static void ShowCurrencyExchangeMenu()
 	{
-		if (!CheckAccessRights(clsUser::enPermissions::pCurrencyExchange))
-		{
-			return;
-		}
-
 		system("cls");
 		_DrawScreenHeader("\tCurrency Exchange Screen");
 
@@ -111,4 +106,3 @@ public:
 	}
 
 };
-

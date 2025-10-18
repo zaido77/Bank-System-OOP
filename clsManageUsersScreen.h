@@ -98,8 +98,8 @@ private:
     }
 
 public:
-	static void ShowManageUsersMenu()
-	{
+    static void ShowManageUsersMenu()
+    {
         if (!CheckAccessRights(clsUser::enPermissions::pManageUsers))
         {
             return;
@@ -120,7 +120,6 @@ public:
         cout << setw(37) << "" << "===========================================\n";
 
         _PerformManageUsersMenuOption((enManageUsersMenuOptions)_ReadManageUsersMenuOption());
-	}
+    }
 
 };
-

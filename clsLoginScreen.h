@@ -4,6 +4,7 @@
 #include "clsMainScreen.h"
 #include "clsUser.h"
 #include "clsInputValidate.h"
+#include "clsUtil.h"
 #include "Global.h"
 #include <iostream>
 using namespace std;
@@ -21,18 +22,24 @@ private:
 			if (LoginFailed)
 			{
 				FailedLoginCount++;
-				cout << "\nInvalid Username/Password\n";
-				cout << "You have " << (3 - FailedLoginCount) << " Trial(s) to login.\n\n";
+
+				if (FailedLoginCount == 3)
+				{
+					cout << "\n" << clsUtil::Tabs(5) << "You are Locked after 3 failed logins.\n";
+					return false;
+				}
+
+				cout << "\n" << clsUtil::Tabs(5) << "Invalid Username/Password\n";
+				cout << clsUtil::Tabs(5) << "You have " << (3 - FailedLoginCount) << " Trial(s) to login.\n";
 			}
 
-			if (FailedLoginCount == 3)
-			{
-				cout << "\nYou are Locked after 3 failed login.\n";
-				return false;
-			}
 
-			string UserName = clsInputValidate::ReadString("Enter Username: ");
-			string Password = clsInputValidate::ReadString("Enter Password: ");
+			cout << "\n\n" << clsUtil::Tabs(5);
+			string UserName = clsInputValidate::ReadString("Username: ");
+
+			cout << clsUtil::Tabs(5);
+			string Password = clsInputValidate::ReadString("Password: ");
+
 
 			CurrentUser = clsUser::Find(UserName, Password);
 			LoginFailed = CurrentUser.IsEmpty();

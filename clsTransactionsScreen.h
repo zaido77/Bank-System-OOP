@@ -13,11 +13,11 @@ using namespace std;
 class clsTransactionsScreen : protected clsScreen
 {
 private:
-	enum enTransactionsMenuOptions {
-		eDeposit = 1, eWithdraw = 2, 
-        eTotalBalances = 3, eTransfer, 
+    enum enTransactionsMenuOptions {
+        eDeposit = 1, eWithdraw = 2,
+        eTotalBalances = 3, eTransfer,
         eTransferLog = 5, eMainMenu = 6
-	};
+    };
 
     static short _ReadTransactionsMenuOption()
     {
@@ -99,8 +99,8 @@ private:
 
 public:
 
-	static void ShowTransactionsMenu()
-	{
+    static void ShowTransactionsMenu()
+    {
         if (!CheckAccessRights(clsUser::enPermissions::pTransactions))
         {
             return;
@@ -121,7 +121,7 @@ public:
         cout << setw(37) << "" << "===========================================\n";
 
         _PerformTransactionsMenuOption((enTransactionsMenuOptions)_ReadTransactionsMenuOption());
-	}
+    }
 
 };
 

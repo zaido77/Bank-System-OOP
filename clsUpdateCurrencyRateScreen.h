@@ -30,6 +30,11 @@ private:
 public:
 	static void ShowUpdateCurrencyRateScreen()
 	{
+		if (!CheckAccessRights(clsUser::enPermissions::pUpdateCurrencyRate))
+		{
+			return;
+		}
+
 		_DrawScreenHeader("\tUpdate Currency Rate Screen");
 
 		string Code = clsInputValidate::ReadString("\nEnter Currency Code: ");

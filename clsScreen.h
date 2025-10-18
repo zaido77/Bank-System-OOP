@@ -24,9 +24,10 @@ protected:
 		cout << clsUtil::Tabs(5) << "______________________________________\n\n";
 		
 		if (!CurrentUser.IsEmpty())
+		{
 			cout << clsUtil::Tabs(5) << "User: " << CurrentUser.GetUsername() << "\n";
-		
-		cout << clsUtil::Tabs(5) << "Date: " << clsDate::DateToString(clsDate()) << "\n\n";
+			cout << clsUtil::Tabs(5) << "Date: " << clsDate::FormatDate(clsDate(), CurrentUser.Preferences.DateFormat()) << "\n\n";
+		}
 	}
 
 	static bool CheckAccessRights(clsUser::enPermissions Permission)

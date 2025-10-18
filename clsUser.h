@@ -8,6 +8,7 @@
 #include "clsString.h"
 #include "clsDate.h"
 #include "clsUtil.h"
+#include "clsUserSettings.h"
 using namespace std;
 
 class clsUser : public clsPerson
@@ -64,7 +65,8 @@ private:
 			vUser[3],
 			vUser[4],
 			clsUtil::DecryptText(vUser[5]),
-			stoi(vUser[6])
+			stoi(vUser[6]),
+			vUser[7]
 		);
 	}
 
@@ -79,13 +81,14 @@ private:
 		Line += User.GetUsername() + Delim;
 		Line += clsUtil::EncryptText(User.GetPassword()) + Delim;
 		Line += to_string(User.GetPermissions());
+		Line += User.Preferences.DateFormat();
 
 		return Line;
 	}
 
 	static clsUser _GetEmptyUserObject()
 	{
-		return clsUser(enMode::EmptyMode, "", "", "", "", "", "", 0);
+		return clsUser(enMode::EmptyMode, "", "", "", "", "", "", 0, "");
 	}
 
 	static vector<clsUser> _LoadUsersDataFromFile()
@@ -165,10 +168,12 @@ private:
 	}
 
 public:	
+	clsUserPreferences Preferences;
+
 	enum enPermissions {
 		pAll = -1, pListClients = 1, pAddNewClient = 2, pDeleteClient = 4,
 		pUpdateClient = 8, pFindClient = 16, pTransactions = 32, pManageUsers = 64, 
-		pLoginRegister = 128, pCurrencyExchange = 256
+		pLoginRegister = 128, pUpdateCurrencyRate = 256
 	};
 
 	struct stLoginRegisterRecord
@@ -179,13 +184,14 @@ public:
 		short Permissions;
 	};
 
-	clsUser(enMode Mode, string FirstName, string LastName, string Email, string Phone, string UserName, string Password, short Permissions)
+	clsUser(enMode Mode, string FirstName, string LastName, string Email, string Phone, string UserName, string Password, short Permissions, string DateFormat)
 		: clsPerson(FirstName, LastName, Email, Phone)
 	{
 		_Mode = Mode;
 		_UserName = UserName;
 		_Password = Password;
 		_Permissions = Permissions;
+		Preferences.SetDateFormat(DateFormat);
 	}
 
 	bool IsEmpty()
@@ -314,7 +320,7 @@ public:
 
 	static clsUser GetAddNewUserObject(string UserName)
 	{
-		return clsUser(enMode::AddNewMode, "", "", "", "", UserName, "", 0);
+		return clsUser(enMode::AddNewMode, "", "", "", "", UserName, "", 0, "");
 	}
 
 	bool Delete()
