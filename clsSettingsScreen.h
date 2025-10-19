@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "clsScreen.h"
+#include "clsChangeDateFormatScreen.h"
 using namespace std;
 
 class clsSettingsScreen : protected clsScreen
@@ -26,7 +27,7 @@ private:
 
 	static void _ShowChangeDateFormatScreen()
 	{
-		cout << "\nShowChangeDateFormatScreen will be here\n";
+		clsChangeDateFormatScreen::ShowChangeDateFormatScreen();
 	}
 
 	static void _PerformSettingsMenuOption(enSettingsMenuOptions SettingsMenuOption)

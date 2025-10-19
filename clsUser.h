@@ -80,7 +80,7 @@ private:
 		Line += User.GetPhone() + Delim;
 		Line += User.GetUsername() + Delim;
 		Line += clsUtil::EncryptText(User.GetPassword()) + Delim;
-		Line += to_string(User.GetPermissions());
+		Line += to_string(User.GetPermissions()) + Delim;
 		Line += User.Preferences.DateFormat();
 
 		return Line;
@@ -397,6 +397,12 @@ public:
 		}
 
 		return vLoginRegisterRecords;
+	}
+
+	void UpdateDateFormat(string DateFormat)
+	{
+		Preferences.SetDateFormat(DateFormat);
+		Save();
 	}
 
 };

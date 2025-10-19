@@ -11,7 +11,7 @@ private:
 public:
 	clsUserPreferences()
 	{
-		_DateFormat = "dd/mm/yyyy";
+		_DateFormat = "DD/MM/YYYY";
 	}
 
 	void SetDateFormat(string DateFormat)

@@ -203,7 +203,7 @@ public:
         system("cls");
     }
 
-    static void ColorScreen(enColor Text = BrightWhite, enColor Background = Black)
+    static void ColorScreen(enColor Text = White, enColor Background = Black)
     {
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         WORD color = (Background << 4) | Text;

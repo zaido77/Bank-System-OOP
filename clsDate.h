@@ -1078,13 +1078,13 @@ public:
 		return CompareDates(*this, Date2);
 	}
 
-	static string FormatDate(clsDate Date, string DateFormat = "dd/mm/yyyy")
+	static string FormatDate(clsDate Date, string DateFormat = "DD/MM/YYYY")
 	{
 		string FormattedDateString = "";
 
-		FormattedDateString = clsString::ReplaceSubStrings(DateFormat, "dd", to_string(Date.Day));
-		FormattedDateString = clsString::ReplaceSubStrings(FormattedDateString, "mm", to_string(Date.Month));
-		FormattedDateString = clsString::ReplaceSubStrings(FormattedDateString, "yyyy", to_string(Date.Year));
+		FormattedDateString = clsString::ReplaceSubStrings(clsString::UpperAllString(DateFormat), "DD", to_string(Date.Day));
+		FormattedDateString = clsString::ReplaceSubStrings(FormattedDateString, "MM", to_string(Date.Month));
+		FormattedDateString = clsString::ReplaceSubStrings(FormattedDateString, "YYYY", to_string(Date.Year));
 
 		return FormattedDateString;
 	}
