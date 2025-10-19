@@ -185,7 +185,7 @@ public:
         return Text;
     }
 
-    enum enColor
+    enum enColors
     {
         Black = 0, Gray = 8,
         Blue = 1, LightBlue = 9,
@@ -203,11 +203,57 @@ public:
         system("cls");
     }
 
-    static void ColorScreen(enColor Text = White, enColor Background = Black)
+    static void ColorScreen(enColors Text = White, enColors Background = Black)
     {
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         WORD color = (Background << 4) | Text;
         SetConsoleTextAttribute(hConsole, color);
+    }
+
+    static string ColorToString(enColors Color)
+    {
+        switch (Color)
+        {
+        case enColors::Black: return "Black";
+        case enColors::Gray: return "Gray";
+        case enColors::Blue: return "Blue";
+        case enColors::LightBlue: return "Light Blue";
+        case enColors::Green: return "Green";
+        case enColors::LightGreen: return "Light Green";
+        case enColors::Aqua: return "Aqua";
+        case enColors::LightAqua: return "Light Aqua";
+        case enColors::Red: return "Red";
+        case enColors::LightRed: return "Light Red";
+        case enColors::Purple: return "Purple";
+        case enColors::LightPurple: return "Light Purple";
+        case enColors::Yellow: return "Yellow";
+        case enColors::LightYellow: return "Light Yellow";
+        case enColors::White: return "White";
+        case enColors::BrightWhite: return "Bright White";
+        }
+
+    }
+
+    static enColors StringToColor(string ColorName)
+    {
+        ColorName = clsString::LowerAllString(ColorName);
+
+        if      (ColorName == "black")         return enColors::Black;
+        else if (ColorName == "gray")          return enColors::Gray;
+        else if (ColorName == "blue")          return enColors::Blue;
+        else if (ColorName == "light blue")    return enColors::LightBlue;
+        else if (ColorName == "green")         return enColors::Green;
+        else if (ColorName == "light green")   return enColors::LightGreen;
+        else if (ColorName == "aqua")          return enColors::Aqua;
+        else if (ColorName == "light aqua")    return enColors::LightAqua;
+        else if (ColorName == "red")           return enColors::Red;
+        else if (ColorName == "light red")     return enColors::LightRed;
+        else if (ColorName == "purple")        return enColors::Purple;
+        else if (ColorName == "light purple")  return enColors::LightPurple;
+        else if (ColorName == "yellow")        return enColors::Yellow;
+        else if (ColorName == "light yellow")  return enColors::LightYellow;
+        else if (ColorName == "white")         return enColors::White;
+        else if (ColorName == "bright white")  return enColors::BrightWhite;
     }
 
     static string NumberToText(int Number)

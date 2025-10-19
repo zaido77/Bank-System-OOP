@@ -19,6 +19,7 @@ private:
 
 		do
 		{
+			clsUtil::ColorScreen(clsUtil::Red);
 			if (LoginFailed)
 			{
 				FailedLoginCount++;
@@ -32,6 +33,7 @@ private:
 				cout << "\n" << clsUtil::Tabs(5) << "Invalid Username/Password\n";
 				cout << clsUtil::Tabs(5) << "You have " << (3 - FailedLoginCount) << " Trial(s) to login.\n";
 			}
+			clsUtil::ColorScreen();
 
 
 			cout << "\n\n" << clsUtil::Tabs(5);

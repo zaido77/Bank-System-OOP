@@ -1,6 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include "clsUtil.h"
+#include "clsString.h"
+#include "clsScreenColors.h"
 using namespace std;
 
 class clsUserPreferences
@@ -9,14 +12,23 @@ private:
 	string _DateFormat;
 
 public:
+	clsScreenColors ScreenColors;
+
 	enum enDateFormatOptions {
 		DDMMYYYslash = 1, DDMMYYYdash = 2, DDMMYYYdot = 3,
 		YYYYMMDDslash = 4, YYYYMMDDdash = 5, YYYYMMDDdot = 6,
 	};
-
-	clsUserPreferences()
+	
+	clsUserPreferences() 
+		: ScreenColors()
 	{
 		_DateFormat = "DD/MM/YYYY";
+	}
+
+	clsUserPreferences(string DateFormat, clsScreenColors ScreenColors)
+	{
+		_DateFormat = DateFormat;
+		this->ScreenColors = ScreenColors;
 	}
 
 	void SetDateFormat(string DateFormat)

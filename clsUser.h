@@ -66,7 +66,8 @@ private:
 			vUser[4],
 			clsUtil::DecryptText(vUser[5]),
 			stoi(vUser[6]),
-			vUser[7]
+			vUser[7],
+			clsScreenColors::ConvertLineToScreenColorsObject(vUser[8])
 		);
 	}
 
@@ -81,14 +82,15 @@ private:
 		Line += User.GetUsername() + Delim;
 		Line += clsUtil::EncryptText(User.GetPassword()) + Delim;
 		Line += to_string(User.GetPermissions()) + Delim;
-		Line += User.Preferences.DateFormat();
+		Line += User.Preferences.DateFormat() + Delim;
+		Line += User.Preferences.ScreenColors.ConvertToLine();
 
 		return Line;
 	}
 
 	static clsUser _GetEmptyUserObject()
 	{
-		return clsUser(enMode::EmptyMode, "", "", "", "", "", "", 0, "");
+		return clsUser(enMode::EmptyMode, "", "", "", "", "", "", 0, "", clsScreenColors());
 	}
 
 	static vector<clsUser> _LoadUsersDataFromFile()
@@ -184,14 +186,14 @@ public:
 		short Permissions;
 	};
 
-	clsUser(enMode Mode, string FirstName, string LastName, string Email, string Phone, string UserName, string Password, short Permissions, string DateFormat)
-		: clsPerson(FirstName, LastName, Email, Phone)
+	clsUser(enMode Mode, string FirstName, string LastName, string Email, string Phone, string UserName, string Password, short Permissions, string DateFormat, clsScreenColors ScreenColors)
+		: clsPerson(FirstName, LastName, Email, Phone),
+		  Preferences(DateFormat, ScreenColors)
 	{
 		_Mode = Mode;
 		_UserName = UserName;
 		_Password = Password;
 		_Permissions = Permissions;
-		Preferences.SetDateFormat(DateFormat);
 	}
 
 	bool IsEmpty()
@@ -320,7 +322,7 @@ public:
 
 	static clsUser GetAddNewUserObject(string UserName)
 	{
-		return clsUser(enMode::AddNewMode, "", "", "", "", UserName, "", 0, "");
+		return clsUser(enMode::AddNewMode, "", "", "", "", UserName, "", 0, "DD/MM/YYYY", clsScreenColors());
 	}
 
 	bool Delete()
