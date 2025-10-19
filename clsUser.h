@@ -8,7 +8,7 @@
 #include "clsString.h"
 #include "clsDate.h"
 #include "clsUtil.h"
-#include "clsUserSettings.h"
+#include "clsUserPreferences.h"
 using namespace std;
 
 class clsUser : public clsPerson
