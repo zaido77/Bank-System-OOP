@@ -92,15 +92,19 @@ public:
 		system("cls");
 		_DrawScreenHeader("\tCurrency Exchange Screen");
 
+		clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusBorders());
 		cout << setw(37) << "" << "===========================================\n";
 		cout << setw(37) << "" << "          Currency Exchange Menu\n";
 		cout << setw(37) << "" << "===========================================\n";
+		clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusOptions());
 		cout << setw(37) << "" << "   [1] List Currencies.\n";
 		cout << setw(37) << "" << "   [2] Find Currency.\n";
 		cout << setw(37) << "" << "   [3] Update Rate.\n";
 		cout << setw(37) << "" << "   [4] Currency Calculator.\n";
 		cout << setw(37) << "" << "   [5] Main Menu.\n";
+		clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusBorders());
 		cout << setw(37) << "" << "===========================================\n";
+		clsUtil::ColorScreen();
 
 		_PerformCurrencyExchangeMenuOption((enCurrencyExchangeMenuOptions)_ReadCurrencyExchangeMenuOption());
 	}

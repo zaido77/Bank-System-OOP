@@ -33,6 +33,7 @@ public:
 
         _DrawScreenHeader(Title, SubTitle);
 
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.Tables());
         cout << "\n";
         cout << setw(8) << left << "";
         cout << "________________________________________________________________________________________________\n\n";
@@ -49,10 +50,11 @@ public:
         cout << "\n";
         cout << setw(8) << left << "";
         cout << "________________________________________________________________________________________________\n\n";
+        clsUtil::ColorScreen();
 
         if (vTransferLogRecords.size() == 0)
         {
-            cout << clsUtil::Tabs(5) << "(No Trasnfers Available in the System)\n";
+            cout << clsUtil::Tabs(5) << "(No Transfers Available in the System)\n";
         }
         else
         {
@@ -61,10 +63,11 @@ public:
                 _PrintTransferLogRecord(TransferLogRecord);
             }
         }
-
+        
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.Tables());
         cout << setw(8) << left << "";
         cout << "________________________________________________________________________________________________\n\n";
-
+        clsUtil::ColorScreen();
 	}
 };
 

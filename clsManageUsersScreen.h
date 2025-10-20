@@ -108,16 +108,20 @@ public:
         system("cls");
         _DrawScreenHeader("\t  Manage Users Screen");
 
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusBorders());
         cout << setw(37) << "" << "===========================================\n";
         cout << setw(37) << "" << "             Manage Users Menue\n";
         cout << setw(37) << "" << "===========================================\n";
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusOptions());
         cout << setw(37) << "" << "   [1] List Users.\n";
         cout << setw(37) << "" << "   [2] Add New User.\n";
         cout << setw(37) << "" << "   [3] Delete User.\n";
         cout << setw(37) << "" << "   [4] Update User Info.\n";
         cout << setw(37) << "" << "   [5] Find User.\n";
         cout << setw(37) << "" << "   [6] Main Menu\n";
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusBorders());
         cout << setw(37) << "" << "===========================================\n";
+        clsUtil::ColorScreen();
 
         _PerformManageUsersMenuOption((enManageUsersMenuOptions)_ReadManageUsersMenuOption());
     }

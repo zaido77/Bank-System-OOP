@@ -52,12 +52,16 @@ public:
 		system("cls");
 		_DrawScreenHeader("\t    Settings Screen");
 
+		clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusBorders());
 		cout << setw(37) << "" << "===========================================\n";
 		cout << setw(37) << "" << "               Settings Menu\n";
 		cout << setw(37) << "" << "===========================================\n";
+		clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusOptions());
 		cout << setw(37) << "" << "   [1] Change Date Format.\n";
 		cout << setw(37) << "" << "   [2] Main Menu.\n";
+		clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusBorders());
 		cout << setw(37) << "" << "===========================================\n";
+		clsUtil::ColorScreen();
 
 		_PerformSettingsMenuOption((enSettingsMenuOptions)_ReadSettingsMenuOption());
 	}

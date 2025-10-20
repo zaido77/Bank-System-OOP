@@ -109,16 +109,20 @@ public:
         system("cls");
         _DrawScreenHeader("\t Transactions Screen");
 
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusBorders());
         cout << setw(37) << "" << "===========================================\n";
         cout << setw(37) << "" << "             Transactions Menue\n";
         cout << setw(37) << "" << "===========================================\n";
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusOptions());
         cout << setw(37) << "" << "   [1] Deposit.\n";
         cout << setw(37) << "" << "   [2] Withdraw.\n";
         cout << setw(37) << "" << "   [3] Total Balances.\n";
         cout << setw(37) << "" << "   [4] Transfer.\n";
         cout << setw(37) << "" << "   [5] Transfer Log.\n";
         cout << setw(37) << "" << "   [6] Main Menu.\n";
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusBorders());
         cout << setw(37) << "" << "===========================================\n";
+        clsUtil::ColorScreen();
 
         _PerformTransactionsMenuOption((enTransactionsMenuOptions)_ReadTransactionsMenuOption());
     }

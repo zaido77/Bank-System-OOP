@@ -69,7 +69,7 @@ public:
 	    return _Tables;
 	}
 
-	static clsScreenColors ConvertLineToScreenColorsObject(string Line, string Delim = "$==$")
+	static clsScreenColors ConvertLineToScreenColorsObject(string Line, string Delim = ":||:")
 	{
 		vector<string> vScreenColors = clsString::Split(Line, Delim);
 
@@ -81,7 +81,7 @@ public:
 		);
 	}
 
-	string ConvertToLine(string Delim = "$==$")
+	string ConvertToLine(string Delim = ":||:")
 	{
 		string Line = "";
 
@@ -92,6 +92,7 @@ public:
 
 		return Line;
 	}
+
 
 };
 

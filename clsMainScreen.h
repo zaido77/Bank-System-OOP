@@ -170,9 +170,11 @@ public:
         system("cls");
         _DrawScreenHeader("\t     Main Screen");
 
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusBorders());
         cout << setw(37) << "" << "===========================================\n";
         cout << setw(37) << "" << "                 Main Menu\n";
         cout << setw(37) << "" << "===========================================\n";
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusOptions());
         cout << setw(37) << "" << "   [1] Show Clients List.\n";
         cout << setw(37) << "" << "   [2] Add New Client.\n";
         cout << setw(37) << "" << "   [3] Delete Client.\n";
@@ -183,8 +185,11 @@ public:
         cout << setw(37) << "" << "   [8] Login Register.\n";
         cout << setw(37) << "" << "   [9] Currency Exchange.\n";
         cout << setw(37) << "" << "   [10] Settings.\n";
+        clsUtil::ColorScreen(clsUtil::Red);
         cout << setw(37) << "" << "   [11] Logout.\n";
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusBorders());
         cout << setw(37) << "" << "===========================================\n";
+        clsUtil::ColorScreen();
 
         _PerformMainMenuOption((enMainMenuOptions)_ReadMainMenuOption());
     }

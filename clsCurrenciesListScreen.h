@@ -30,6 +30,7 @@ public:
 
         _DrawScreenHeader(Title, SubTitle);
 
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.Tables());
         cout << "\n";
         cout << setw(8) << left << "";
         cout << "________________________________________________________________________________________________\n\n";
@@ -43,6 +44,8 @@ public:
 
         cout << setw(8) << left << "";
         cout << "________________________________________________________________________________________________\n\n";        
+        clsUtil::ColorScreen();
+
         if (vCurrencies.size() == 0)
         {
             cout << clsUtil::Tabs(5) << "(No Currencies Available in the System)\n";
@@ -55,8 +58,10 @@ public:
             }
         }
         
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.Tables());
         cout << setw(8) << left << "";
         cout << "________________________________________________________________________________________________\n\n";
+        clsUtil::ColorScreen();
 	}
 
 };

@@ -28,6 +28,7 @@ public:
 
         _DrawScreenHeader(Title, SubTitle);
     
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.Tables());
         cout << "\n";
         cout << setw(12) << left << "";
         cout << "____________________________________________________________________________________________\n\n";
@@ -40,6 +41,7 @@ public:
         cout << "\n";
         cout << setw(12) << left << "";
         cout << "____________________________________________________________________________________________\n\n";
+        clsUtil::ColorScreen();
 
         if (vClients.size() == 0)
         {
@@ -53,8 +55,10 @@ public:
             }
         }
 
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.Tables());
         cout << setw(12) << left << "";
         cout << "____________________________________________________________________________________________\n\n";
+        clsUtil::ColorScreen();
 
         float TotalBalances = clsBankClient::GetTotalBalances();
 

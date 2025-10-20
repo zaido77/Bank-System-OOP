@@ -35,6 +35,7 @@ public:
 
         _DrawScreenHeader(Title, SubTitle);
 
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.Tables());
         cout << "\n";
         cout << setw(8) << left << "";
         cout << "________________________________________________________________________________________________\n\n";
@@ -48,6 +49,7 @@ public:
         cout << "\n";
         cout << setw(8) << left << "";
         cout << "________________________________________________________________________________________________\n\n";
+        clsUtil::ColorScreen();
 
         if (vLoginRegisterRecords.size() == 0)
         {
@@ -61,8 +63,10 @@ public:
             }
         }
 
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.Tables());
         cout << setw(8) << left << "";
         cout << "________________________________________________________________________________________________\n\n";
+        clsUtil::ColorScreen();
 
 	}
 };

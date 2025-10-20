@@ -25,16 +25,20 @@ public:
 	{
 		_DrawScreenHeader("\tChange Date Format Screen");
 
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusBorders());
         cout << setw(36) << "" << "==============================================\n";
         cout << setw(36) << "" << "              Date Format Options\n";
         cout << setw(36) << "" << "==============================================\n";
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusOptions());
         cout << setw(36) << "" << "   [1] DD/MM/YYYY\n";
         cout << setw(36) << "" << "   [2] DD-MM-YYYY\n";
         cout << setw(36) << "" << "   [3] DD.MM.YYYY\n";
         cout << setw(36) << "" << "   [4] YYYY/MM/DD\n";
         cout << setw(36) << "" << "   [5] YYYY-MM-DD\n";
         cout << setw(36) << "" << "   [6] YYYY.MM.DD\n";
+        clsUtil::ColorScreen(CurrentUser.Preferences.ScreenColors.MenusBorders());
         cout << setw(36) << "" << "==============================================\n";
+        clsUtil::ColorScreen();
         
         _PerformDateFormatOption((clsUserPreferences::enDateFormatOptions)_ReadDateFormatOption());
 	}

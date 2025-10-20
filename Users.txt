@@ -1,7 +1,7 @@
-Adli#//#Haddad#//#Adli@Gmail.com#//#8983883#//#User1#//#3456#//#0#//#DD/MM/YYYY#//#Yellow$==$Gray$==$Light Blue$==$Green
-Jamil#//#Adli#//#Jamil@gmail.com#//#23123123#//#User2#//#3456#//#7#//#DD/MM/YYYY#//#Blue$==$Gray$==$Light Blue$==$Green
-Ahmed#//#Koko#//#k@a.com#//#05325453#//#User3#//#3333#//#193#//#DD/MM/YYYY#//#Red$==$Gray$==$Light Blue$==$Green
-Mazem#//#Kareem#//#Mazin@gmail.com#//#898234#//#User4#//#3456#//#-1#//#YYYY/MM/DD#//#Aqua$==$Gray$==$Light Blue$==$Green
-Mohammed#//#Abu-Hadhoud#//#Msa@Gmail.com#//#838838#//#User5#//#7777#//#-1#//#DD/MM/YYYY#//#Purple$==$Gray$==$Light Blue$==$Green
-Alia#//#Ali#//#M@gmail.com#//#09388322#//#User6#//#6545#//#-1#//#DD/MM/YYYY#//#Light Red$==$Gray$==$Light Blue$==$Green
-Zaid#//#Irsheid#//#z@z.com#//#0544203205#//#User7#//#9999#//#-1#//#YYYY.MM.DD#//#Yellow$==$Gray$==$Light Blue$==$Green
+Adli#//#Haddad#//#Adli@Gmail.com#//#8983883#//#User1#//#3456#//#0#//#YYYY.MM.DD#//#Yellow:||:Gray:||:Light Blue:||:Green
+Jamil#//#Adli#//#Jamil@gmail.com#//#23123123#//#User2#//#3456#//#7#//#DD/MM/YYYY#//#Blue:||:Gray:||:Light Blue:||:Green
+Ahmed#//#Koko#//#k@a.com#//#05325453#//#User3#//#3333#//#193#//#DD/MM/YYYY#//#Red:||:Gray:||:Light Blue:||:Green
+Mazem#//#Kareem#//#Mazin@gmail.com#//#898234#//#User4#//#3456#//#-1#//#YYYY/MM/DD#//#Aqua:||:Gray:||:Light Blue:||:Green
+Mohammed#//#Abu-Hadhoud#//#Msa@Gmail.com#//#838838#//#User5#//#7777#//#-1#//#DD/MM/YYYY#//#Purple:||:Gray:||:Light Blue:||:Green
+Alia#//#Ali#//#M@gmail.com#//#09388322#//#User6#//#6545#//#-1#//#DD/MM/YYYY#//#Light Red:||:Gray:||:Light Blue:||:Green
+Zaid#//#Irsheid#//#z@z.com#//#0544203205#//#User7#//#9999#//#-1#//#YYYY.MM.DD#//#Yellow:||:Gray:||:Light Blue:||:Green
