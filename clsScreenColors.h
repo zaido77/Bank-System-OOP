@@ -13,11 +13,17 @@ private:
 	clsUtil::enColors _Tables;
 
 public:
+	enum enScreenColors
+	{
+		eHeaders = 1, eMenusBorders = 2,
+		eMenusOptions = 3, eTables = 4
+	};
+
 	clsScreenColors()
 	{
 		_Headers = clsUtil::Yellow;
 		_MenusBorders = clsUtil::Gray;
-		_MenusOptions = clsUtil::LightBlue;
+		_MenusOptions = clsUtil::Aqua;
 		_Tables = clsUtil::Green;
 	}
 
@@ -93,6 +99,20 @@ public:
 		return Line;
 	}
 
+	static string ScreenColorsEnumToString(enScreenColors ScreenColor)
+	{
+		switch (ScreenColor)
+		{
+		case enScreenColors::eHeaders:
+			return "Headers";
+		case enScreenColors::eMenusBorders:
+			return "Menus Borders";
+		case enScreenColors::eMenusOptions:
+			return "Menus Options";
+		case enScreenColors::eTables:
+			return "Tables";
+		}
+	}
 
 };
 

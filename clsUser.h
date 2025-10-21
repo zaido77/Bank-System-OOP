@@ -407,6 +407,27 @@ public:
 		Save();
 	}
 
+	void ChangeColorOf(clsScreenColors::enScreenColors ScreenColorsOption, clsUtil::enColors Color)
+	{
+		switch (ScreenColorsOption)
+		{
+		case clsScreenColors::enScreenColors::eHeaders:
+			Preferences.ScreenColors.SetHeaders(Color);
+			break;
+		case clsScreenColors::enScreenColors::eMenusBorders:
+			Preferences.ScreenColors.SetMenusBorders(Color);
+			break;
+		case clsScreenColors::enScreenColors::eMenusOptions:
+			Preferences.ScreenColors.SetMenusOptions(Color);
+			break;
+		case clsScreenColors::enScreenColors::eTables:
+			Preferences.ScreenColors.SetTables(Color);
+			break;
+		}
+
+		Save();
+	}
+
 };
 
 const string clsUser::UsersFileName = "Users.txt";
