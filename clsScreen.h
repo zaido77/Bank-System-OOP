@@ -29,8 +29,12 @@ protected:
 		if (!CurrentUser.IsEmpty())
 		{
 			clsUtil::ColorScreen(clsUtil::White, clsUtil::Blue);
-			cout << clsUtil::Tabs(5) << "User: " << CurrentUser.GetUsername() << "\n";
-			cout << clsUtil::Tabs(5) << "Date: " << clsDate::FormatDate(clsDate(), CurrentUser.Preferences.DateFormat()) << "\n\n";
+
+			cout << clsUtil::Tabs(5) 
+				<< left << setw(6) << "User: " << setw(32) << CurrentUser.GetUsername() << "\n";
+			cout << clsUtil::Tabs(5) 
+				<< left << setw(13) << "Date & Time: " << setw(25) << clsDate::GetSystemDateTimeString(CurrentUser.Preferences.DateFormat(), false) << "\n\n";
+			
 			clsUtil::ColorScreen();
 		}
 	}

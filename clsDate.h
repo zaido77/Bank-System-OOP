@@ -107,7 +107,7 @@ public:
 		return clsDate(Day, Month, Year);
 	}
 
-	static string GetSystemDateTimeString()
+	static string GetSystemDateTimeString(string DateFormat = "DD/MM/YYYY", bool IncludeSeconds = true)
 	{
 		//return DateToString(clsDate()) + " - " + clsUtil::GetSystemTime();
 
@@ -123,10 +123,10 @@ public:
 		Minute = now->tm_min;
 		Second = now->tm_sec;
 
-		return to_string(Day) + "/" + to_string(Month) + "/" + to_string(Year)
+		return FormatDate(clsDate(Day, Month, Year), DateFormat)
 			+ " - "
-			+ to_string(Hour) + ":" + to_string(Minute) + ":" + to_string(Second);
-
+			+ to_string(Hour) + ":" + to_string(Minute)
+				+ (IncludeSeconds ? (":" + to_string(Second)) : "");
 	}
 
 	static bool IsValidDate(clsDate Date)
