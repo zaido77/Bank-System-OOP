@@ -401,30 +401,21 @@ public:
 		return vLoginRegisterRecords;
 	}
 
-	void UpdateDateFormat(string DateFormat)
+	void UpdateDateFormat(clsUserPreferences::enDateFormatOptions DateFormat)
 	{
 		Preferences.SetDateFormat(DateFormat);
 		Save();
 	}
 
-	void ChangeColorOf(clsScreenColors::enScreenColors ScreenColorsOption, clsUtil::enColors Color)
+	void UpdateScreenColors(clsScreenColors::enScreenColors ScreenColorsOption, clsUtil::enColors Color)
 	{
-		switch (ScreenColorsOption)
-		{
-		case clsScreenColors::enScreenColors::eHeaders:
-			Preferences.ScreenColors.SetHeaders(Color);
-			break;
-		case clsScreenColors::enScreenColors::eMenusBorders:
-			Preferences.ScreenColors.SetMenusBorders(Color);
-			break;
-		case clsScreenColors::enScreenColors::eMenusOptions:
-			Preferences.ScreenColors.SetMenusOptions(Color);
-			break;
-		case clsScreenColors::enScreenColors::eTables:
-			Preferences.ScreenColors.SetTables(Color);
-			break;
-		}
+		Preferences.ScreenColors.ChangeColorOf(ScreenColorsOption, Color);
+		Save();
+	}
 
+	void ResetPreferencesToDefaults()
+	{
+		Preferences.ResetToDefaults();
 		Save();
 	}
 

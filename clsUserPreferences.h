@@ -20,9 +20,8 @@ public:
 	};
 	
 	clsUserPreferences() 
-		: ScreenColors()
 	{
-		_DateFormat = "DD/MM/YYYY";
+		ResetToDefaults();
 	}
 
 	clsUserPreferences(string DateFormat, clsScreenColors ScreenColors)
@@ -34,6 +33,11 @@ public:
 	void SetDateFormat(string DateFormat)
 	{
 		_DateFormat = DateFormat;
+	}
+
+	void SetDateFormat(enDateFormatOptions DateFormat)
+	{
+		_DateFormat = DateFormatOptionToString(DateFormat);
 	}
 
 	string DateFormat()
@@ -64,6 +68,12 @@ public:
 			return "YYYY.MM.DD";
 
 		}
+	}
+
+	void ResetToDefaults()
+	{
+		_DateFormat = "DD/MM/YYYY";
+		ScreenColors.ResetToDefualts();
 	}
 
 };

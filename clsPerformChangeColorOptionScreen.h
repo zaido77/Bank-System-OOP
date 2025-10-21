@@ -43,7 +43,7 @@ public:
 
         clsUtil::enColors Color = (clsUtil::enColors)_ReadColorOption(ScreenColorsOptionString);
         
-        CurrentUser.ChangeColorOf(ScreenColorsOption, Color);
+        CurrentUser.UpdateScreenColors(ScreenColorsOption, Color);
 	}
 
 };

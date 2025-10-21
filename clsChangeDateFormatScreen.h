@@ -17,7 +17,7 @@ private:
 
     static void _PerformDateFormatOption(clsUserPreferences::enDateFormatOptions DateFormatOption)
     {
-        CurrentUser.UpdateDateFormat(clsUserPreferences::DateFormatOptionToString(DateFormatOption));
+        CurrentUser.UpdateDateFormat(DateFormatOption);
     }
 
 public:

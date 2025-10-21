@@ -21,10 +21,7 @@ public:
 
 	clsScreenColors()
 	{
-		_Headers = clsUtil::Yellow;
-		_MenusBorders = clsUtil::Gray;
-		_MenusOptions = clsUtil::Aqua;
-		_Tables = clsUtil::Green;
+		ResetToDefualts();
 	}
 
 	clsScreenColors(clsUtil::enColors Headers, clsUtil::enColors MenusBorders, clsUtil::enColors MenusOptions, clsUtil::enColors Tables)
@@ -112,6 +109,33 @@ public:
 		case enScreenColors::eTables:
 			return "Tables";
 		}
+	}
+
+	void ChangeColorOf(enScreenColors ScreenColorsOption, clsUtil::enColors Color)
+	{
+		switch (ScreenColorsOption)
+		{
+		case clsScreenColors::enScreenColors::eHeaders:
+			SetHeaders(Color);
+			break;
+		case clsScreenColors::enScreenColors::eMenusBorders:
+			SetMenusBorders(Color);
+			break;
+		case clsScreenColors::enScreenColors::eMenusOptions:
+			SetMenusOptions(Color);
+			break;
+		case clsScreenColors::enScreenColors::eTables:
+			SetTables(Color);
+			break;
+		}
+	}
+
+	void ResetToDefualts()
+	{
+		_Headers = clsUtil::Yellow;
+		_MenusBorders = clsUtil::Gray;
+		_MenusOptions = clsUtil::Aqua;
+		_Tables = clsUtil::Green;
 	}
 
 };
